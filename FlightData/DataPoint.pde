@@ -1,14 +1,16 @@
 class DataPoint {
-  String flightDate, mktCarrier, flightNum, origin, originCity, originState,
+  String flightDate = ""; 
+  String mktCarrier = ""; 
+  String flightNum, origin, originCity, originState,
   originWAC, dest, destCity, destState, destWAC, crsDepTime, depTime, crsArrTime,
   arrTime, cancelled, diverted, distance;
   
   DataPoint(TableRow row)
   {
     
-    flightDate = row.getString("FL_DATE");
-    mktCarrier = row.getString("MKT_CARRIER");
-    flightNum = row.getString("MKT_CARRIER_FL_NUM");
+    flightDate = row.getString("FL_DATE"); //<>//
+    mktCarrier = row.getString("MKT_CARRIER"); //<>//
+    flightNum = row.getString("MKT_CARRIER_FL_NUM"); //<>//
     origin = row.getString("ORIGIN");
     originCity = row.getString("ORIGIN_CITY_NAME");
     originState = row.getString("ORIGIN_STATE_ABR");

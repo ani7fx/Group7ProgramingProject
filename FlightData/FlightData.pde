@@ -1,11 +1,11 @@
 import java.util.Scanner;
 Table theTable;
-ArrayList <DataPoint> flightsArray;
+ArrayList <DataPoint> flightsArray = new ArrayList<DataPoint>();
 
 void setup() {
   theTable = loadTable("flights2k.csv", "header");
   initFlights();
-   flightsArray = new ArrayList<DataPoint>();
+   //flightsArray = ;
 }
 
 void initFlights() {
