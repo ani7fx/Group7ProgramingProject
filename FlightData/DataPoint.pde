@@ -26,5 +26,5 @@ class DataPoint {
     distance = row.getString("DISTANCE");
     
   }
-  
+ 
 }
