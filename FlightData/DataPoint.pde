@@ -1,7 +1,5 @@
 class DataPoint {
-  String flightDate = ""; 
-  String mktCarrier = ""; 
-  String flightNum, origin, originCity, originState,
+  String flightDate, mktCarrier, flightNum, origin, originCity, originState,
   originWAC, dest, destCity, destState, destWAC, crsDepTime, depTime, crsArrTime,
   arrTime, cancelled, diverted, distance;
   
