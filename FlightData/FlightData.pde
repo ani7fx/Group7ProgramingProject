@@ -1,3 +1,4 @@
+
 import java.util.Scanner; //<>// //<>//
 Table theTable;
 ArrayList <DataPoint> flightsArray = new ArrayList<DataPoint>();
