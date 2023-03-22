@@ -1,4 +1,5 @@
 
+
 int[] data = {80, 120, 200, 80, 160}; // place where u put information
 int numBars = data.length;
 int barWidth = 50;

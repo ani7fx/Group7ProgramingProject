@@ -5,7 +5,7 @@ class DataPoint {
   
   DataPoint(TableRow row)
   {
-    
+
     flightDate = row.getString("FL_DATE"); //<>//
     mktCarrier = row.getString("MKT_CARRIER"); //<>//
     flightNum = row.getString("MKT_CARRIER_FL_NUM"); //<>//
@@ -26,5 +26,17 @@ class DataPoint {
     distance = row.getString("DISTANCE");
     
   }
- 
-}
+  
+  //==:df.loc[df['ORIGIN'] == 'JFK']
+  
+  //void setup()
+  //{
+  //  println("What U.S.A. state do you want to know the number of flights of?");
+    
+  //   String name = getString("Enter your name:");
+  //   //print("Hello " + name + ".  You are " + age);
+  //   //print(" years old and you have $" + money + "!  Your");
+  //   //println(" gender is " + gender + ".");
+  //}
+   
+} 
