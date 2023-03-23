@@ -52,15 +52,14 @@ class barChart {
 
       fill(0);
 
-      //for (int j = 0; j < 350; j = j+5) {
-        textAlign(RIGHT);
-        text(barHeight/5, chartX - labelOffset, y + barHeight/5);
-      //}
-
       // draw x-axis labels
-      textSize(15);
+      //textSize(15);
       textAlign(CENTER);
       text(names[i], x + barWidth/2, chartY + chartHeight + labelOffset);
     }
+    for (int j = 70; j >= 0; j = j-5) {
+        textAlign(RIGHT);
+        text(j, chartX - labelOffset, chartY + 350-(j*5));
+      }
   }
 }

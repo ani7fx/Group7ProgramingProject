@@ -52,7 +52,7 @@ void countCitiesInState() { //<>//
   {
     if (flightsArray.get(i).originState.equals("FL"))
     {
-      floridaAirports.add(flightsArray.get(i).originCity);
+      floridaAirports.add(flightsArray.get(i).origin);
     }
   }
 

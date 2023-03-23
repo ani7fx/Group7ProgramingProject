@@ -26,7 +26,7 @@ class Widget {
     rect(widgetX,widgetY,width,height);
     fill(labelColor);
     text(label, widgetX+5, widgetY+height-27);
-    textSize(26);
+    textSize(22);
   }
   int getEvent(int mX, int mY){
      if(mX>widgetX && mX < widgetX+width && mY >widgetY && mY <widgetY+height)
