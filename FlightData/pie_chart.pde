@@ -1,7 +1,7 @@
 
 
-int[] values = {32,11 , 7};
-int[] colors = {#E4000F, #655CBE, #107C10};
+//int[] values = {32,11 , 7};
+//int[] colors = {#E4000F, #655CBE, #107C10};
 
 
 

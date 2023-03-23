@@ -7,29 +7,29 @@ final int WIDGET_WIDTH = 200;
 final int WIDGET_HEIGHT = 80;
 
 class Widget {
-  int x, y, width, height;
+  int widgetX, widgetY, width, height;
   String label;
   int event;
   color widgetColor, labelColor, strokeColor;
   PFont widgetFont;
 
-  Widget(int x,int y, int width, int height, String label,
+  Widget(int widgetX,int widgetY, int width, int height, String label,
   color widgetColor, PFont widgetFont, int event){
-    this.x=x; this.y=y; this.width = width; this.height= height;
+    this.widgetX=widgetX; this.widgetY=widgetY; this.width = width; this.height= height;
     this.label=label; this.event=event; 
     this.widgetColor=widgetColor; this.widgetFont=widgetFont; strokeColor = color(0);
     labelColor= color(0);
    }
-  void draw(){
+  void drawWidget(){ //<>//
     stroke(strokeColor);
     fill(widgetColor);
-    rect(x,y,width,height);
+    rect(widgetX,widgetY,width,height);
     fill(labelColor);
-    text(label, x+5, y+height-27);
+    text(label, widgetX+5, widgetY+height-27);
     textSize(26);
   }
   int getEvent(int mX, int mY){
-     if(mX>x && mX < x+width && mY >y && mY <y+height)
+     if(mX>widgetX && mX < widgetX+width && mY >widgetY && mY <widgetY+height)
      {
         return event;
      }
