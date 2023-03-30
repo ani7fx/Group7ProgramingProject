@@ -9,12 +9,14 @@ ArrayList <DataPoint> flightsArray = new ArrayList<DataPoint>();
 PFont standard;
 HashMap<String, Integer> freqMap = new HashMap<String, Integer>();
 ArrayList <String> floridaAirports = new ArrayList<String>();
+String input;
+ArrayList<DataPoint> betweenDates;
+int y = 30;
 
 barChart flChart;
 Tab flightTab, tab2, tab3, tab4;
 
 int delayedFlights = 0;
-int
 
 void setup()
 {
@@ -217,7 +219,20 @@ void displayTab2(){
 }
 
 void displayTab3() {
-  text("this is tab 3", 200, 200);
+  text("Enter your start date and end date in the format mm/dd/yyyy - mm/dd/yyyy", 50, 100);
+      fill(255);
+      rect(50, 120, 250, 30);
+      fill(0);
+      input = input (50, 150);
+      betweenDates = betweenDates(input, flightsArray);
+      if (betweenDates.size() != 0)
+      {
+        text("Your date range has " + (betweenDates.size()+1) + " flights in it.", 50, 250);
+        for (int i = 0; i < betweenDates.size(); i++ )
+          text(i + " " + betweenDates.get(i).flightDate + " " + betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " " +betweenDates.get(i).originState +" " +
+            betweenDates.get(i).originWAC + " " +betweenDates.get(i).dest + " " +betweenDates.get(i).destCity + " " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime + " " +
+            betweenDates.get(i).depTime + " " +betweenDates.get(i).crsArrTime +" " + betweenDates.get(i).arrTime + " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted + " " +betweenDates.get(i).distance + "\n", 50, y);
+      }
 }
 
 void displayTab4() {
@@ -258,30 +273,30 @@ void countCitiesInState() {
   }
 }
 
-void sortOutPunctuality() {
-  for (int i = 0; i < flightsArray.size(); i++)
-  {
-    int cancelledVar = int(flightsArray.get(i).cancelled);
-    if ( cancelledVar == 1)
-    {
-      cancelledFlights++;
-    } else
-    {
-      int predictArrTime = int(flightsArray.get(i).crsArrTime);
-      int actArrTime = int(flightsArray.get(i).arrTime);
-      int substraction = predictArrTime - actArrTime;
-      if (substraction > 0)
-      {
-        earlyFlights++;
-      } else if (substraction == 0)
-      {
-        onTimeFlights++;
-      } else if (substraction < 0)
-      {
-        delayedFlights++;
-      }
-    }
-    int timeArray []= {cancelledFlights, earlyFlights, onTimeFlights, delayedFlights};
-    int[] colors = {#FF3E3E, #FFF646, #54FF46, #46E5FF};
-  }
-}
+//void sortOutPunctuality() {
+//  for (int i = 0; i < flightsArray.size(); i++)
+//  {
+//    int cancelledVar = int(flightsArray.get(i).cancelled);
+//    if ( cancelledVar == 1)
+//    {
+//      cancelledFlights++;
+//    } else
+//    {
+//      int predictArrTime = int(flightsArray.get(i).crsArrTime);
+//      int actArrTime = int(flightsArray.get(i).arrTime);
+//      int substraction = predictArrTime - actArrTime;
+//      if (substraction > 0)
+//      {
+//        earlyFlights++;
+//      } else if (substraction == 0)
+//      {
+//        onTimeFlights++;
+//      } else if (substraction < 0)
+//      {
+//        delayedFlights++;
+//      }
+//    }
+//    int timeArray []= {cancelledFlights, earlyFlights, onTimeFlights, delayedFlights};
+//    int[] colors = {#FF3E3E, #FFF646, #54FF46, #46E5FF};
+//  }
+//}

@@ -1,19 +1,35 @@
-import javax.swing.*;
+String typing = "";
+String saved = "";
 
-String prompt(String s)
-{
-  println(s);
-  String entry = JOptionPane.showInputDialog(s);
-  if (entry == null)
-    return null;
-  println(entry);
-  return entry;
+String input(int inX, int inY) {
+  text(typing, inX, inY);
+  return saved;
 }
 
-String getString(String s)
-{
-  return prompt(s);
+void keyPressed() {
+  if (key == '\n') {
+    saved = typing;
+    typing = "";
+  } else typing = typing + key;
 }
+
+
+//import javax.swing.*;
+
+//String prompt(String s)
+//{
+//  println(s);
+//  String entry = JOptionPane.showInputDialog(s);
+//  if (entry == null)
+//    return null;
+//  println(entry);
+//  return entry;
+//}
+
+//String getString(String s)
+//{
+//  return prompt(s);
+//}
 
 //int getInt(String s)
 //{

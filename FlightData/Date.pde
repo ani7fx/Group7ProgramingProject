@@ -1,5 +1,5 @@
 //class dateSort { //<>//
-  String date, date1;
+  String date;
   int month, day, year, startDay, endDay;
 
   int dateSort(String date) //<>//
@@ -34,25 +34,4 @@
     }
     return betweenDates;
   }
-//}
-
-  //int getDay() //<>//
-  //{
-
-  //  try {
-  //    SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy  HH:mm");
-  //    dateFound = format.parse(date);
-  //  }
-  //  catch (ParseException e) {
-  //    error++;
-  //    println(error + "fails");
-  //    return 0;
-  //  }
-  //  Calendar calendar = Calendar.getInstance();
-  //  calendar.setTime(dateFound);
-  //  day = Calendar.DAY_OF_MONTH;
-  //  works++;
-
-  //  println(day, works);
-  //  return day;
-  //}
+//} //<>//

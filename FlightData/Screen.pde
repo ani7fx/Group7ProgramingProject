@@ -41,5 +41,22 @@
 //      barChart flChart = new barChart(freqMap);
 //      flChart.drawChart();
 //    }
+//if (dateScreen)
+//    {
+//      text("Enter your start date and end date in the format mm/dd/yyyy - mm/dd/yyyy", 50, 100);
+//      fill(255);
+//      rect(50, 120, 250, 30);
+//      fill(0);
+//      input = input (50, 150);
+//      betweenDates = betweenDates(input, flightsArray);
+//      if (betweenDates.size() != 0)
+//      {
+//        text("Your date range has " + (betweenDates.size()+1) + " flights in it.", 50, 250);
+//        for (int i = 0; i < betweenDates.size(); i++ )
+//          text(i + " " + betweenDates.get(i).flightDate + " " + betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " " +betweenDates.get(i).originState +" " +
+//            betweenDates.get(i).originWAC + " " +betweenDates.get(i).dest + " " +betweenDates.get(i).destCity + " " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime + " " +
+//            betweenDates.get(i).depTime + " " +betweenDates.get(i).crsArrTime +" " + betweenDates.get(i).arrTime + " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted + " " +betweenDates.get(i).distance, 50, y);
+//            y = y+30;
+//      }
 //  }
 //}

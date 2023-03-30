@@ -2,6 +2,7 @@ class DataPoint { //<>//
   String flightDate, mktCarrier, flightNum, origin, originCity, originState,
     originWAC, dest, destCity, destState, destWAC, crsDepTime, depTime, crsArrTime,
     arrTime, cancelled, diverted, distance;
+  int day;
 
   DataPoint(TableRow row)
   {
@@ -24,17 +25,7 @@ class DataPoint { //<>//
     cancelled = row.getString("CANCELLED");
     diverted = row.getString("DIVERTED");
     distance = row.getString("DISTANCE");
+    day = dateSort(flightDate);
+    
   }
-
-  //==:df.loc[df['ORIGIN'] == 'JFK']
-
-  //void setup()
-  //{
-  //  println("What U.S.A. state do you want to know the number of flights of?");
-
-  //   String name = getString("Enter your name:");
-  //   //print("Hello " + name + ".  You are " + age);
-  //   //print(" years old and you have $" + money + "!  Your");
-  //   //println(" gender is " + gender + ".");
-  //}
 }
