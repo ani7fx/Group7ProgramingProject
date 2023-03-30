@@ -35,13 +35,11 @@ class barChart {
     line(chartX, chartY + chartHeight, chartX + (numBars+1) * barWidth, chartY + chartHeight); // x-axis
 
     // draw bars
-    for (String key : freqMap.keySet())
-    {
-      int frequency = freqMap.get(key);
-      System.out.println(key + ": " + frequency);
-      data[j] = frequency;
-      names[j] = key;
-      j++;
+    for (int i = 0; i < numBars; i++) {
+    String key = (String) freqMap.keySet().toArray()[i];
+    int frequency = freqMap.get(key);
+    data[i] = frequency;
+    names[i] = key;
     }
     for (int i = 0; i < numBars; i++) {
       int barHeight = data[i]*5;
