@@ -141,7 +141,7 @@ void addTabs()
 
 void addButtons()
 {
-  cp5.addButton("Flights")
+  cp5.addButton("Bar Chart")
     .setBroadcast(false)
     .setPosition(width/2-120, height/2-50)
     .setSize(80, 40)
@@ -150,7 +150,7 @@ void addButtons()
     .getCaptionLabel().align(CENTER, CENTER)
     ;
 
-  cp5.addButton("button2")
+  cp5.addButton("Date Sort")
     .setBroadcast(false)
     .setPosition(width/2+40, height/2-50)
     .setSize(80, 40)
@@ -282,7 +282,7 @@ void displayTab1() {
 void displayTab2() {
   //flChart.drawChart();
   // cp5.addDropdownList;
-  flChart.drawChart();
+  chart1.drawChart();
 }
 
 void displayTab3() {
@@ -290,11 +290,13 @@ void displayTab3() {
   fill(255);
   rect(175, 140, 250, 30);
   fill(0);
-  input = input (50, 150);
+  input = input(50, 150);
   betweenDates = betweenDates(input, flightsArray);
   if (betweenDates.size() != 0)
   {
     text("Your date range has " + (betweenDates.size()+1) + " flights in it.", 50, 250);
+    
+    // we need to fix this so it prints the text properly - add scrolling maybe? 
     for (int i = 0; i < betweenDates.size(); i++ )
       text(i + " " + betweenDates.get(i).flightDate + " " + betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " " +betweenDates.get(i).originState +" " +
         betweenDates.get(i).originWAC + " " +betweenDates.get(i).dest + " " +betweenDates.get(i).destCity + " " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime + " " +
