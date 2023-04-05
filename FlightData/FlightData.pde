@@ -9,7 +9,7 @@ HashMap<String, Integer> freqMap = new HashMap<String, Integer>();
 ArrayList <String> floridaAirports = new ArrayList<String>();
 String input;
 ArrayList<DataPoint> betweenDates;
-int y = 30;
+int y1 = 30;
 int cancelledFlights = 0;
 int earlyFlights = 0;
 int onTimeFlights = 0;
@@ -183,7 +183,7 @@ void addButtons()
     .setSize(80, 40)
     ;
   cp5.addButton("home_copy1")
-    .setPosition((width/2) - 40, (height/2)+50)
+    .setPosition((width/2) - 40, (height/2)+120)
     .moveTo(tab3)
     .setSize(80, 40)
     .setLabel("home")
@@ -298,7 +298,7 @@ void displayTab3() {
     for (int i = 0; i < betweenDates.size(); i++ )
       text(i + " " + betweenDates.get(i).flightDate + " " + betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " " +betweenDates.get(i).originState +" " +
         betweenDates.get(i).originWAC + " " +betweenDates.get(i).dest + " " +betweenDates.get(i).destCity + " " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime + " " +
-        betweenDates.get(i).depTime + " " +betweenDates.get(i).crsArrTime +" " + betweenDates.get(i).arrTime + " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted + " " +betweenDates.get(i).distance + "\n", 50, y);
+        betweenDates.get(i).depTime + " " +betweenDates.get(i).crsArrTime +" " + betweenDates.get(i).arrTime + " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted + " " +betweenDates.get(i).distance + "\n", 50, y1);
   }
 }
 

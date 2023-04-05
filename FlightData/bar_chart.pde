@@ -40,7 +40,7 @@ class barChart {
     for (int i = 0; i < numBars; i++) {
       int barHeight = data[i]*5;
       int x = chartX + (i+1) * barWidth;
-      int y = chartY + chartHeight - barHeight;
+      int y = chartY + chartHeight - barHeight/2;
       fill(0, 0, 255);
       rect(x, y, barWidth, barHeight);
 
@@ -49,7 +49,7 @@ class barChart {
       // draw x-axis labels
       //textSize(15);
       textAlign(CENTER);
-      text(names[i], x + barWidth/2, chartY + chartHeight + labelOffset);
+      text(names[i], x + barWidth/2 - 25, chartY + chartHeight + labelOffset);
     }
     for (int j = 70; j >= 0; j = j-5) {
         textAlign(RIGHT);
