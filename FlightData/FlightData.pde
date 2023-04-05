@@ -141,7 +141,7 @@ void addTabs()
 
 void addButtons()
 {
-  cp5.addButton("Bar Chart")
+  cp5.addButton("Flights")
     .setBroadcast(false)
     .setPosition(width/2-120, height/2-50)
     .setSize(80, 40)
@@ -150,7 +150,7 @@ void addButtons()
     .getCaptionLabel().align(CENTER, CENTER)
     ;
 
-  cp5.addButton("Date Sort")
+  cp5.addButton("button2")
     .setBroadcast(false)
     .setPosition(width/2+40, height/2-50)
     .setSize(80, 40)
@@ -282,7 +282,7 @@ void displayTab1() {
 void displayTab2() {
   //flChart.drawChart();
   // cp5.addDropdownList;
-  chart1.drawChart();
+  flChart.drawChart();
 }
 
 void displayTab3() {
