@@ -9,7 +9,8 @@ HashMap<String, Integer> freqMap = new HashMap<String, Integer>();
 ArrayList <String> floridaAirports = new ArrayList<String>();
 String input;
 ArrayList<DataPoint> betweenDates;
-int y1 = 30;
+int y1 = 300;
+int y2 = 20;
 int cancelledFlights = 0;
 int earlyFlights = 0;
 int onTimeFlights = 0;
@@ -17,10 +18,11 @@ int delayedFlights = 0;
 PieChart pieChart;
 barChart flChart;
 Tab flightTab, tab2, tab3, tab4;
-int colors[] = {#FF3E3E, #FFF646, #54FF46, #46E5FF};
+int colors[] = {#562C2C, #F2542D, #F5DFBB, #127475};
 int timeArray[];
 
 PImage image;
+PImage plane;
 ScreenButton[] buttons = new ScreenButton[51];
 int screen = 1;
 
@@ -42,6 +44,9 @@ void setup() {
   pieChart = new PieChart(width/2.0, height/2.0);
   textSize(20);
   initStateButtons();
+  
+  plane = loadImage("finalplane.png");
+  plane.resize(800,0);
 }
 
 void initStateButtons()
@@ -105,6 +110,8 @@ void draw()
 {
   background(100, 160, 100);
   displayTabs();
+  
+  
 }
 
 void addTabs()
@@ -147,7 +154,8 @@ void addButtons()
     .setSize(80, 40)
     .setValue(1)
     .setBroadcast(true)
-    .getCaptionLabel().align(CENTER, CENTER)
+    .setLabel("Sort By State")
+    .setColorBackground(color(#F25F5C))
     ;
 
   cp5.addButton("button2")
@@ -156,7 +164,8 @@ void addButtons()
     .setSize(80, 40)
     .setValue(1)
     .setBroadcast(true)
-    .getCaptionLabel().align(CENTER, CENTER)
+    .setLabel("Sort By Date")
+    .setColorBackground(color(#50514F))
     ;
 
   cp5.addButton("button3")
@@ -165,7 +174,8 @@ void addButtons()
     .setSize(80, 40)
     .setValue(1)
     .setBroadcast(true)
-    .getCaptionLabel().align(CENTER, CENTER)
+    .setLabel("Flight Status")
+    .setColorBackground(color(#247BA0))
     ;
 
   cp5.addButton("button4")
@@ -174,14 +184,15 @@ void addButtons()
     .setSize(80, 40)
     .setValue(1)
     .setBroadcast(true)
-    .getCaptionLabel().align(CENTER, CENTER)
+    .setLabel("Last Tab")
+    .setColorBackground(color(#0C4767))
     ;
 
-  cp5.addButton("home")
-    .setPosition((width/2) - 40, (height/2)+50)
-    .moveTo(tab2)
-    .setSize(80, 40)
-    ;
+  //cp5.addButton("home")
+  //  .setPosition((width/2) - 40, (height/2)+50)
+  //  .moveTo(tab2)
+  //  .setSize(80, 40)
+  //  ;
   cp5.addButton("home_copy1")
     .setPosition((width/2) - 40, (height/2)+120)
     .moveTo(tab3)
@@ -277,6 +288,8 @@ void displayTabs() {
   }
 }
 void displayTab1() {
+  tint(0,50);
+  image(plane,width/2 - 400,height/2 - 350);
 }
 
 void displayTab2() {
@@ -298,22 +311,22 @@ void displayTab3() {
     
     // we need to fix this so it prints the text properly - add scrolling maybe? 
     for (int i = 0; i < betweenDates.size(); i++ )
-      text(i + " " + betweenDates.get(i).flightDate + " " + betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " " +betweenDates.get(i).originState +" " +
+      text(i + " | " + betweenDates.get(i).flightDate + " | " + betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " " +betweenDates.get(i).originState +" " +
         betweenDates.get(i).originWAC + " " +betweenDates.get(i).dest + " " +betweenDates.get(i).destCity + " " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime + " " +
-        betweenDates.get(i).depTime + " " +betweenDates.get(i).crsArrTime +" " + betweenDates.get(i).arrTime + " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted + " " +betweenDates.get(i).distance + "\n", 50, y1);
+        betweenDates.get(i).depTime + " " +betweenDates.get(i).crsArrTime +" " + betweenDates.get(i).arrTime + " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted + " " +betweenDates.get(i).distance + "\n", 20, y1 + (y2*i)); 
   }
 }
 
 void displayTab4() {
   pieChart.drawPieChart(width/2.0, height/2.0, 200.0, timeArray, colors);
-  fill(#FF3E3E);
-  text("cancelled", 20, height/2.0);
-  fill(#FFF646);
-  text("early", 20, (height/2.0)+20);
-  fill(#54FF46);
-  text("on time", 20, (height/2.0)+40);
-  fill(#46E5FF);
-  text("delayed", 20, (height/2.0)+60);
+  fill(#562C2C);
+  text("Cancelled", 20, height/2.0);
+  fill(#F2542D);
+  text("Early", 20, (height/2.0)+20);
+  fill(#F5DFBB);
+  text("On time", 20, (height/2.0)+40);
+  fill(#127475);
+  text("Delayed", 20, (height/2.0)+60);
 }
 
 void displayTab5() {

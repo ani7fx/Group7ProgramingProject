@@ -9,8 +9,8 @@ class barChart {
   int numBars;
   int barWidth = 50;
   int chartHeight = 350;
-  int chartX = 150;
-  int chartY = 50;
+  int chartX = 250;
+  int chartY = 125;
   int labelOffset = 30;
   int j = 0;
   HashMap<String, Integer> freqMap;
@@ -55,5 +55,6 @@ class barChart {
         textAlign(RIGHT);
         text(j, chartX - labelOffset, chartY + 350-(j*5));
       }
+      textAlign(LEFT);
   }
 }
