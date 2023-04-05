@@ -1,4 +1,4 @@
-import controlP5.*;  //<>//
+import controlP5.*;  //<>// //<>//
 ControlP5 cp5;
 barChart chart1;
 int currentTab = 1;
@@ -24,6 +24,7 @@ PImage image;
 ScreenButton[] buttons = new ScreenButton[51];
 int screen = 1;
 
+int stateNumber;
 
 void setup() {
   theTable = loadTable("flights2k.csv", "header");
@@ -47,58 +48,58 @@ void setup() {
 void initStateButtons()
 {
   image = loadImage("usstatesbc__90159.jpg");
-  buttons[0] = new ScreenButton( 250, 39, 84, 55); //alabama 
-  buttons[1] = new ScreenButton(250, 110, 84, 55); //goes down to virginia
-  buttons[2] = new ScreenButton(250, 182, 84, 55);
-  buttons[3] = new ScreenButton(250, 253, 84, 55);
-  buttons[4] = new ScreenButton(250, 327, 84, 55);
-  buttons[5] = new ScreenButton(250, 402, 84, 55);
-  buttons[6] = new ScreenButton(250, 477, 84, 55);
-  buttons[7] = new ScreenButton(250, 553, 84, 55);
-  buttons[8] = new ScreenButton(250, 620, 84, 55);
-  buttons[9] = new ScreenButton(250, 700, 84, 55);  //virginia
-  buttons[10] = new ScreenButton(350, 39, 84, 55); //2nd row 
-  buttons[11] = new ScreenButton(350, 110, 84, 55); 
-  buttons[12] = new ScreenButton(350, 182, 84, 55); 
-  buttons[13] = new ScreenButton(350, 253, 84, 55); 
-  buttons[14] = new ScreenButton(350, 327, 84, 55); 
-  buttons[15] = new ScreenButton(350, 402, 84, 55); 
-  buttons[16] = new ScreenButton(350, 477, 84, 55); 
-  buttons[17] = new ScreenButton(350, 553, 84, 55); 
-  buttons[18] = new ScreenButton(350, 620, 84, 55); 
-  buttons[19] = new ScreenButton(350, 700, 84, 55); //washington
-  buttons[20] = new ScreenButton(452, 39, 84, 55);  //3rd column
-  buttons[21] = new ScreenButton(452, 110, 84, 55);
-  buttons[22] = new ScreenButton(452, 182, 84, 55);
-  buttons[23] = new ScreenButton(452, 253, 84, 55);
-  buttons[24] = new ScreenButton(452, 327, 84, 55);
-  buttons[25] = new ScreenButton(452, 402, 84, 55);
-  buttons[26] = new ScreenButton(452, 477, 84, 55);
-  buttons[27] = new ScreenButton(452, 553, 84, 55);
-  buttons[28] = new ScreenButton(452, 620, 84, 55);
-  buttons[29] = new ScreenButton(452, 700, 84, 55);  //west virginia
-  buttons[30] = new ScreenButton(553, 39, 84, 55);   // 4th column
-  buttons[31] = new ScreenButton(553, 110, 84, 55);
-  buttons[32] = new ScreenButton(553, 182, 84, 55);
-  buttons[33] = new ScreenButton(553, 253, 84, 55);
-  buttons[34] = new ScreenButton(553, 327, 84, 55);
-  buttons[35] = new ScreenButton(553, 402, 84, 55);
-  buttons[36] = new ScreenButton(553, 477, 84, 55);
-  buttons[37] = new ScreenButton(553, 553, 84, 55);
-  buttons[38] = new ScreenButton(553, 620, 84, 55);
-  buttons[39] = new ScreenButton(553, 700, 84, 55);  // wisconsin
-  buttons[40] = new ScreenButton(653, 39, 84, 55);  // 5th column
-  buttons[41] = new ScreenButton(653, 110, 84, 55);
-  buttons[42] = new ScreenButton(653, 182, 84, 55);
-  buttons[43] = new ScreenButton(653, 253, 84, 55);
-  buttons[44] = new ScreenButton(653, 327, 84, 55);
-  buttons[45] = new ScreenButton(653, 402, 84, 55);
-  buttons[46] = new ScreenButton(653, 477, 84, 55);
-  buttons[47] = new ScreenButton(653, 553, 84, 55);
-  buttons[48] = new ScreenButton(653, 620, 84, 55);
-  buttons[49] = new ScreenButton(653, 700, 84, 55);
+  buttons[0] = new ScreenButton( 250, 39, 84, 55,1); //alabama 
+  buttons[1] = new ScreenButton(250, 110, 84, 55,2); //goes down to virginia
+  buttons[2] = new ScreenButton(250, 182, 84, 55,3);
+  buttons[3] = new ScreenButton(250, 253, 84, 55,4);
+  buttons[4] = new ScreenButton(250, 327, 84, 55,5);
+  buttons[5] = new ScreenButton(250, 402, 84, 55,6);
+  buttons[6] = new ScreenButton(250, 477, 84, 55,7);
+  buttons[7] = new ScreenButton(250, 553, 84, 55,8);
+  buttons[8] = new ScreenButton(250, 620, 84, 55,9);
+  buttons[9] = new ScreenButton(250, 700, 84, 55,10);  //virginia
+  buttons[10] = new ScreenButton(350, 39, 84, 55,11); //2nd row 
+  buttons[11] = new ScreenButton(350, 110, 84, 55,12); 
+  buttons[12] = new ScreenButton(350, 182, 84, 55,13); 
+  buttons[13] = new ScreenButton(350, 253, 84, 55,14); 
+  buttons[14] = new ScreenButton(350, 327, 84, 55,15); 
+  buttons[15] = new ScreenButton(350, 402, 84, 55,16); 
+  buttons[16] = new ScreenButton(350, 477, 84, 55,17); 
+  buttons[17] = new ScreenButton(350, 553, 84, 55,18); 
+  buttons[18] = new ScreenButton(350, 620, 84, 55,19); 
+  buttons[19] = new ScreenButton(350, 700, 84, 55,20); //washington
+  buttons[20] = new ScreenButton(452, 39, 84, 55,21);  //3rd column
+  buttons[21] = new ScreenButton(452, 110, 84, 55,22);
+  buttons[22] = new ScreenButton(452, 182, 84, 55,23);
+  buttons[23] = new ScreenButton(452, 253, 84, 55,24);
+  buttons[24] = new ScreenButton(452, 327, 84, 55,25);
+  buttons[25] = new ScreenButton(452, 402, 84, 55,26);
+  buttons[26] = new ScreenButton(452, 477, 84, 55,27);
+  buttons[27] = new ScreenButton(452, 553, 84, 55,28);
+  buttons[28] = new ScreenButton(452, 620, 84, 55,29);
+  buttons[29] = new ScreenButton(452, 700, 84, 55,30);  //west virginia
+  buttons[30] = new ScreenButton(553, 39, 84, 55,31);   // 4th column
+  buttons[31] = new ScreenButton(553, 110, 84, 55,32);
+  buttons[32] = new ScreenButton(553, 182, 84, 55,33);
+  buttons[33] = new ScreenButton(553, 253, 84, 55,34);
+  buttons[34] = new ScreenButton(553, 327, 84, 55,35);
+  buttons[35] = new ScreenButton(553, 402, 84, 55,36);
+  buttons[36] = new ScreenButton(553, 477, 84, 55,37);
+  buttons[37] = new ScreenButton(553, 553, 84, 55,38);
+  buttons[38] = new ScreenButton(553, 620, 84, 55,39);
+  buttons[39] = new ScreenButton(553, 700, 84, 55,40);  // wisconsin
+  buttons[40] = new ScreenButton(653, 39, 84, 55,41);  // 5th column
+  buttons[41] = new ScreenButton(653, 110, 84, 55,42);
+  buttons[42] = new ScreenButton(653, 182, 84, 55,43);
+  buttons[43] = new ScreenButton(653, 253, 84, 55,44);
+  buttons[44] = new ScreenButton(653, 327, 84, 55,45);
+  buttons[45] = new ScreenButton(653, 402, 84, 55,46);
+  buttons[46] = new ScreenButton(653, 477, 84, 55,47);
+  buttons[47] = new ScreenButton(653, 553, 84, 55,48);
+  buttons[48] = new ScreenButton(653, 620, 84, 55,49);
+  buttons[49] = new ScreenButton(653, 700, 84, 55,50);
 
-  buttons[50] = new ScreenButton(110, 39, 84, 55);  // button screen 2
+  buttons[50] = new ScreenButton(110, 39, 84, 55,51);  // button screen 2
 }
 
 void draw()
@@ -282,7 +283,29 @@ void displayTab1() {
 void displayTab2() {
   //flChart.drawChart();
   // cp5.addDropdownList;
-  flChart.drawChart();
+  //flChart.drawChart();
+  if (screen == 1) {
+    for (int i = 0; i < 50; i++) {
+      
+      noStroke();
+      buttons[i].display();
+      
+    }
+    // Display first screen
+    float imageWidth = image.width * 0.6; // Reduce the width of the image to be 50% of its original size
+    float imageHeight = image.height * 0.6; // Reduce the height of the image to be 50% of its original size
+    float x = (width-imageWidth)/2; // Calculate the x position to center the image
+    float y = height * 0.01 ; // Set the y position to be 10% from the top of the screen
+    background(255);
+    image(image, x, y, imageWidth, imageHeight);
+
+  } else if (screen == 2) {
+    // Display second screen
+    background(#65C2DE);
+    stroke(#050505);
+    fill(#F784E2);
+    buttons[50].display();
+  }
 }
 
 void displayTab3() {
@@ -402,3 +425,21 @@ int[] sortOutPunctuality() {
   //  fill(#F784E2);
   //  buttons[50].display();
   //}
+  
+  
+  void mousePressed() {
+  for (int i = 0; i < buttons.length; i++) {
+    if (buttons[i].isMouseOver()) {
+     
+      if (i == 50) {
+        screen = 1; // Go back to screen 1
+      } else {
+        screen = 2; // Go to screen 2
+      }
+      stateNumber = buttons[i].num; 
+      println(stateNumber);
+      break;
+       
+    }
+  }
+}
