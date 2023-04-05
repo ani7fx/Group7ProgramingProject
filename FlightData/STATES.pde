@@ -12,7 +12,7 @@ class ScreenButton {
   
   void display() {
     rect(x, y, width, height);
-    textAlign(CENTER, CENTER);
+    //textAlign(CENTER, CENTER);
    
   }
   
