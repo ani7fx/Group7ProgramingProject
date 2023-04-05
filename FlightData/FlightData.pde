@@ -1,4 +1,4 @@
-import controlP5.*;  //<>// //<>//
+import controlP5.*;   //<>//
 ControlP5 cp5;
 barChart chart1;
 int currentTab = 1;
