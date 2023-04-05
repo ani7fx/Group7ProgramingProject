@@ -1,13 +1,13 @@
-import controlP5.*;  //<>//
+import controlP5.*;  //<>// //<>//
 ControlP5 cp5;
 barChart chart1;
 int currentTab = 1;
 Table theTable;
 ArrayList <DataPoint> flightsArray = new ArrayList<DataPoint>();
 PFont standard;
+String input;
 HashMap<String, Integer> freqMap = new HashMap<String, Integer>();
 ArrayList <String> floridaAirports = new ArrayList<String>();
-String input;
 ArrayList<DataPoint> betweenDates;
 int y1 = 30;
 int cancelledFlights = 0;
@@ -18,36 +18,42 @@ PieChart pieChart;
 barChart flChart;
 Tab flightTab, tab2, tab3, tab4;
 int colors[] = {#FF3E3E, #FFF646, #54FF46, #46E5FF};
-int timeArray[];
-
-PImage image;
-ScreenButton[] buttons = new ScreenButton[51];
-int screen = 1;
+int timeArray[]; //<>//
+String[] stateAcronyms; //<>//
+PImage image; //<>//
+ScreenButton[] buttons = new ScreenButton[51]; //<>//
+int screen = 1; //<>//
+barChart[] myBarCharts = new barChart[50]; //<>//
 
 
 void setup() {
-  theTable = loadTable("flights2k.csv", "header");
+  theTable = loadTable("flights2k.csv", "header"); //<>//
+  stateAcronyms = loadStrings("State Acronyms.csv");
   initFlights();
   size(1000, 1000);
   cp5 = new ControlP5(this);
   noStroke();
   rectMode(CENTER);
-  addTabs();
+  addTabs(); //<>//
   addButtons();
+
   standard =loadFont("ArialMT-20.vlw");
   textFont(standard);
-  countCitiesInState();
   flChart = new barChart(freqMap);
   timeArray = sortOutPunctuality();
   pieChart = new PieChart(width/2.0, height/2.0);
   textSize(20);
-  initStateButtons();
+  initStateButtons(); //<>//
+  for (int i = 0; i < myBarCharts.length; i++) {
+    freqMap = countCitiesInState(stateAcronyms[i]);
+    myBarCharts[i] = new barChart(freqMap);
+  }
 }
 
 void initStateButtons()
 {
   image = loadImage("usstatesbc__90159.jpg");
-  buttons[0] = new ScreenButton( 250, 39, 84, 55); //alabama 
+  buttons[0] = new ScreenButton( 250, 39, 84, 55); //alabama
   buttons[1] = new ScreenButton(250, 110, 84, 55); //goes down to virginia
   buttons[2] = new ScreenButton(250, 182, 84, 55);
   buttons[3] = new ScreenButton(250, 253, 84, 55);
@@ -57,15 +63,15 @@ void initStateButtons()
   buttons[7] = new ScreenButton(250, 553, 84, 55);
   buttons[8] = new ScreenButton(250, 620, 84, 55);
   buttons[9] = new ScreenButton(250, 700, 84, 55);  //virginia
-  buttons[10] = new ScreenButton(350, 39, 84, 55); //2nd row 
-  buttons[11] = new ScreenButton(350, 110, 84, 55); 
-  buttons[12] = new ScreenButton(350, 182, 84, 55); 
-  buttons[13] = new ScreenButton(350, 253, 84, 55); 
-  buttons[14] = new ScreenButton(350, 327, 84, 55); 
-  buttons[15] = new ScreenButton(350, 402, 84, 55); 
-  buttons[16] = new ScreenButton(350, 477, 84, 55); 
-  buttons[17] = new ScreenButton(350, 553, 84, 55); 
-  buttons[18] = new ScreenButton(350, 620, 84, 55); 
+  buttons[10] = new ScreenButton(350, 39, 84, 55); //2nd row
+  buttons[11] = new ScreenButton(350, 110, 84, 55);
+  buttons[12] = new ScreenButton(350, 182, 84, 55);
+  buttons[13] = new ScreenButton(350, 253, 84, 55);
+  buttons[14] = new ScreenButton(350, 327, 84, 55);
+  buttons[15] = new ScreenButton(350, 402, 84, 55);
+  buttons[16] = new ScreenButton(350, 477, 84, 55);
+  buttons[17] = new ScreenButton(350, 553, 84, 55);
+  buttons[18] = new ScreenButton(350, 620, 84, 55);
   buttons[19] = new ScreenButton(350, 700, 84, 55); //washington
   buttons[20] = new ScreenButton(452, 39, 84, 55);  //3rd column
   buttons[21] = new ScreenButton(452, 110, 84, 55);
@@ -280,9 +286,28 @@ void displayTab1() {
 }
 
 void displayTab2() {
+  if (screen == 1) {
+    for (int i = 0; i < 50; i++) {
+      noStroke();
+      buttons[i].display();
+    }
+    // Display first screen
+    float imageWidth = image.width * 0.6; // Reduce the width of the image to be 50% of its original size
+    float imageHeight = image.height * 0.6; // Reduce the height of the image to be 50% of its original size
+    float x = (width-imageWidth)/2; // Calculate the x position to center the image
+    float y = height * 0.01 ; // Set the y position to be 10% from the top of the screen
+    background(255);
+    image(image, x, y, imageWidth, imageHeight);
+  } else if (screen == 2) {
+    // Display second screen
+    background(#65C2DE);
+    stroke(#050505);
+    fill(#F784E2);
+    buttons[50].display();
+  }
   //flChart.drawChart();
   // cp5.addDropdownList;
-  flChart.drawChart();
+  //flChart.drawChart();
 }
 
 void displayTab3() {
@@ -295,8 +320,8 @@ void displayTab3() {
   if (betweenDates.size() != 0)
   {
     text("Your date range has " + (betweenDates.size()+1) + " flights in it.", 50, 250);
-    
-    // we need to fix this so it prints the text properly - add scrolling maybe? 
+
+    // we need to fix this so it prints the text properly - add scrolling maybe?
     for (int i = 0; i < betweenDates.size(); i++ )
       text(i + " " + betweenDates.get(i).flightDate + " " + betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " " +betweenDates.get(i).originState +" " +
         betweenDates.get(i).originWAC + " " +betweenDates.get(i).dest + " " +betweenDates.get(i).destCity + " " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime + " " +
@@ -329,16 +354,18 @@ void initFlights() {
   }
 }
 
-void countCitiesInState() {
+HashMap countCitiesInState(String state) {
+  HashMap<String, Integer> freqMap = new HashMap<String, Integer>();
+  ArrayList <String> stateAirports = new ArrayList<String>();
   for (int i = 0; i < flightsArray.size(); i++)
   {
-    if (flightsArray.get(i).originState.equals("FL"))
+    if (flightsArray.get(i).originState.equals(state))
     {
-      floridaAirports.add(flightsArray.get(i).origin);
+      stateAirports.add(flightsArray.get(i).origin);
     }
   }
 
-  for (String city : floridaAirports) {
+  for (String city : stateAirports) {
     if (freqMap.containsKey(city)) {
       freqMap.put(city, freqMap.get(city) + 1);
     } else
@@ -352,6 +379,7 @@ void countCitiesInState() {
     int frequency = freqMap.get(key);
     System.out.println(key + ": " + frequency);
   }
+  return freqMap;
 }
 
 int[] sortOutPunctuality() {
@@ -376,29 +404,8 @@ int[] sortOutPunctuality() {
       {
         delayedFlights++;
       }
-    } 
+    }
   }
   int[] timeArray = {cancelledFlights, earlyFlights, onTimeFlights, delayedFlights};
   return timeArray;
 }
-
-//if (screen == 1) {
-  //  for (int i = 0; i < 50; i++) {
-  //    noStroke();
-  //    buttons[i].display();
-  //  }
-  //  // Display first screen
-  //  float imageWidth = image.width * 0.6; // Reduce the width of the image to be 50% of its original size
-  //  float imageHeight = image.height * 0.6; // Reduce the height of the image to be 50% of its original size
-  //  float x = (width-imageWidth)/2; // Calculate the x position to center the image
-  //  float y = height * 0.01 ; // Set the y position to be 10% from the top of the screen
-  //  background(255);
-  //  image(image, x, y, imageWidth, imageHeight);
-
-  //} else if (screen == 2) {
-  //  // Display second screen
-  //  background(#65C2DE);
-  //  stroke(#050505);
-  //  fill(#F784E2);
-  //  buttons[50].display();
-  //}
