@@ -290,11 +290,13 @@ void displayTab3() {
   fill(255);
   rect(175, 140, 250, 30);
   fill(0);
-  input = input (50, 150);
+  input = input(50, 150);
   betweenDates = betweenDates(input, flightsArray);
   if (betweenDates.size() != 0)
   {
     text("Your date range has " + (betweenDates.size()+1) + " flights in it.", 50, 250);
+    
+    // we need to fix this so it prints the text properly - add scrolling maybe? 
     for (int i = 0; i < betweenDates.size(); i++ )
       text(i + " " + betweenDates.get(i).flightDate + " " + betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " " +betweenDates.get(i).originState +" " +
         betweenDates.get(i).originWAC + " " +betweenDates.get(i).dest + " " +betweenDates.get(i).destCity + " " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime + " " +
