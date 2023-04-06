@@ -1,4 +1,4 @@
- //<>// //<>//
+
 import controlP5.*;
 ControlP5 cp5;
 barChart chart1;
@@ -18,32 +18,30 @@ int cancelledFlights = 0;
 int earlyFlights = 0;
 int onTimeFlights = 0;
 int delayedFlights = 0;
-PieChart pieChart; //<>//
-barChart flChart; //<>//
-Tab flightTab, tab2, tab3, tab4; //<>//
-//int colors[] = {#FF3E3E, #FFF646, #54FF46, #46E5FF}; //<>//
-String[] stateAcronymLines;  //<>//
-String[] stateAcronyms;  //<>//
+PieChart pieChart;
+barChart flChart;
+Tab flightTab, tab2, tab3, tab4;
+//int colors[] = {#FF3E3E, #FFF646, #54FF46, #46E5FF};
+String[] stateAcronymLines; 
+String[] stateAcronyms; 
 ScreenButton[] buttons = new ScreenButton[51];
 int screen = 1; 
 barChart[] myBarCharts = new barChart[50];
-int colors[] = {#562C2C, #F2542D, #F5DFBB, #127475}; //<>//
+int colors[] = {#562C2C, #F2542D, #F5DFBB, #127475};
 int timeArray[];
-PImage image;
+PImage flags;
 PImage plane;
-int stateNumber; //<>//
-int startIndex = 0;
-int endIndex = 30;
- //<>//
+int stateNumber;
+
 void setup() {
   theTable = loadTable("flights2k.csv", "header"); //<>//
   stateAcronymLines = loadStrings("State Acronyms.csv");
   stateAcronyms = split(stateAcronymLines[0], ',');
-  image = loadImage("usstatesbc__90159.jpg"); //<>//
-  initFlights(); //<>//
+  flags = loadImage("usstatesbc__90159.jpg"); //<>//
+  initFlights();
   size(1000, 1000);
   cp5 = new ControlP5(this);
-  noStroke(); //<>//
+  noStroke();
   rectMode(CENTER);
   addTabs(); //<>//
   addButtons();
@@ -126,6 +124,7 @@ void draw()
 {
   background(254, 193, 255);
   displayTabs();
+  
 }
 
 void addTabs()
@@ -272,10 +271,7 @@ public void home_copy2(int theValue) {
   cp5.getTab("default").bringToFront();
   currentTab = 1;
 }
-public void home_copy3(int theValue) {
-  cp5.getTab("default").bringToFront();
-  currentTab = 1;
-}
+
 public void home(int theValue) {
   cp5.getTab("default").bringToFront();
   currentTab = 1;
@@ -302,6 +298,7 @@ void displayTabs() {
   }
 }
 void displayTab1() {
+  //image(flags, 10, 10, 500, 500);
   tint(0,50);
   image(plane, width/2 - 400, height/2 - 350);
   textFont(appName);
@@ -315,8 +312,6 @@ void displayTab1() {
   textFont(ornaments);
   text("B", 160, 250);
   text("B", 790, 250);
-  textSize(20);
-  textFont(standard);
 }
 
 void displayTab2() {
@@ -326,13 +321,13 @@ void displayTab2() {
       buttons[i].display();
     }
     // Display first screen
-    float imageWidth = image.width * 0.6; // Reduce the width of the image to be 50% of its original size
-    float imageHeight = image.height * 0.6; // Reduce the height of the image to be 50% of its original size
+    float imageWidth = flags.width * 0.6; // Reduce the width of the image to be 50% of its original size
+    float imageHeight = flags.height * 0.6; // Reduce the height of the image to be 50% of its original size
     float x = (width-imageWidth)/2; // Calculate the x position to center the image
     float y = height * 0.01 ; // Set the y position to be 10% from the top of the screen
     background(255);
     noTint();
-    image(image, x, y, imageWidth, imageHeight);
+    image(flags, x, y, imageWidth, imageHeight);
   } else if (screen == 2) {
     // Display second screen
     background(#65C2DE);
@@ -356,17 +351,12 @@ void displayTab3() {
   if (betweenDates.size() != 0)
   {
     text("Your date range has " + (betweenDates.size()+1) + " flights in it. To search again, just enter a new date range.", 50, 250);
-    String[] printOut = new String[betweenDates.size()];
+
     // we need to fix this so it prints the text properly - add scrolling maybe?
-    for (int i = 0; i < betweenDates.size(); i++ ){
-      printOut[i] = i + " | Jan " + betweenDates.get(i).day + "st | " /*+ betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " */ +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + /*" " +betweenDates.get(i).originState +" " +
+    for (int i = 0; i < betweenDates.size(); i++ )
+      text(i + " | Jan " + betweenDates.get(i).day + "st | " /*+ betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " */ +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + /*" " +betweenDates.get(i).originState +" " +
         betweenDates.get(i).originWAC + */" to " +betweenDates.get(i).dest + " " + betweenDates.get(i).destCity + /*" " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime +*/ " dep: " +
-        betweenDates.get(i).depTime + " " /*+betweenDates.get(i).crsArrTime +*/ +" arr: " + betweenDates.get(i).arrTime +/* " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted +*/ " dist: " +betweenDates.get(i).distance + "\n";
-    }
-    for (int i = 0; i < endIndex-startIndex; i++)
-    {
-      text(printOut[startIndex + i], 20, y1 + (y2*i));
-    }
+        betweenDates.get(i).depTime + " " /*+betweenDates.get(i).crsArrTime +*/ +" arr: " + betweenDates.get(i).arrTime +/* " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted +*/ " dist: " +betweenDates.get(i).distance + "\n", 20, y1 + (y2*i));
   }
 }
 
@@ -488,4 +478,3 @@ void mousePressed() {
     }
   }
 }
-  
