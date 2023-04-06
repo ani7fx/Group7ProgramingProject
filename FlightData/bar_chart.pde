@@ -26,7 +26,7 @@ class barChart {
   void drawChart() {
     // draw chart axes
 
-    stroke(0);
+    stroke(255);
     line(chartX, chartY, chartX, chartY + chartHeight); // y-axis
     line(chartX, chartY + chartHeight, chartX + (numBars+1) * barWidth, chartY + chartHeight); // x-axis
 
@@ -41,10 +41,10 @@ class barChart {
       int barHeight = data[i]*5;
       int x = chartX + (i+1) * barWidth;
       int y = chartY + chartHeight - barHeight/2;  //<>//
-      fill(0, 0, 255);
+      fill(#EC48FF);
       rect(x, y, barWidth, barHeight);
 
-      fill(0);
+      fill(255);
 
       // draw x-axis labels
       //textSize(15);
