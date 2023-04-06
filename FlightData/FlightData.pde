@@ -135,30 +135,35 @@ void addTabs()
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
-    .setId(2);
+    .setId(2)
+    .setHeight(40);
 
   tab2 = cp5.addTab("Tab 2")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
-    .setId(3);
+    .setId(3)
+    .setHeight(40);
 
   tab3 = cp5.addTab("Tab 3")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
-    .setId(4);
+    .setId(4)
+    .setHeight(40);
 
   tab4 = cp5.addTab("Tab 4")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
-    .setId(5);
+    .setId(5)
+    .setHeight(40);
 
   cp5.getTab("default")
     .activateEvent(true)
     .setLabel("home")
-    .setId(1);
+    .setId(1)
+    .setHeight(40);
 }
 
 void addButtons()
@@ -373,7 +378,7 @@ void displayTab3() {
 }
 
 void displayTab4() {
-  pieChart.drawPieChart(width/2.0, height/2.0, 200.0, timeArray, colors);
+  pieChart.drawPieChart(width/2.0, height/2.0-50, 300.0, timeArray, colors);
   textFont(appName);
   textSize(60);
   fill(255);

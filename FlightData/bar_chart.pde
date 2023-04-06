@@ -8,9 +8,9 @@ class barChart {
   String[] names;
   int numBars;
   int barWidth = 50;
-  int chartHeight = 350;
-  int chartX = 250;
-  int chartY = 125;
+  int chartHeight = 520;
+  int chartX = 240;
+  int chartY = 210;
   int labelOffset = 30;
   int j = 0;
   HashMap<String, Integer> freqMap;
