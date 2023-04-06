@@ -1,4 +1,4 @@
-//void setup() {
+//void setup() { //<>//
 //  size(500, 500);
 //  background(255);
 //  drawChart();
@@ -32,15 +32,15 @@ class barChart {
 
     // draw bars
     for (int i = 0; i < numBars; i++) {
-    String key = (String) freqMap.keySet().toArray()[i];
-    int frequency = freqMap.get(key);
-    data[i] = frequency;
-    names[i] = key;
+      String key = (String) freqMap.keySet().toArray()[i];
+      int frequency = freqMap.get(key);
+      data[i] = frequency;
+      names[i] = key;
     }
     for (int i = 0; i < numBars; i++) {
       int barHeight = data[i]*5;
       int x = chartX + (i+1) * barWidth;
-      int y = chartY + chartHeight - barHeight/2;  //<>//
+      int y = chartY + chartHeight - barHeight/2;
       fill(#EC48FF);
       rect(x, y, barWidth, barHeight);
 
@@ -52,10 +52,10 @@ class barChart {
       text(names[i], x + barWidth/2 - 25, chartY + chartHeight + labelOffset);
     }
     for (int j = 70; j >= 0; j = j-5) {
-        textAlign(RIGHT);
-        text(j, chartX - labelOffset, chartY + 350-(j*5));
-      }
-      textAlign(LEFT);
-      noStroke();
+      textAlign(RIGHT);
+      text(j, chartX - labelOffset, chartY + 350-(j*5));
+    }
+    textAlign(LEFT);
+    noStroke();
   }
 }

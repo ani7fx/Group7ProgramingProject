@@ -1,5 +1,4 @@
- //<>// //<>//
-import controlP5.*;
+import controlP5.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 ControlP5 cp5;
 barChart chart1;
 int currentTab = 1;
@@ -8,6 +7,7 @@ ArrayList <DataPoint> flightsArray = new ArrayList<DataPoint>();
 PFont standard;
 PFont appName;
 PFont ornaments;
+PFont bodyFont;
 String input;
 HashMap<String, Integer> freqMap = new HashMap<String, Integer>();
 ArrayList <String> floridaAirports = new ArrayList<String>();
@@ -18,44 +18,45 @@ int cancelledFlights = 0;
 int earlyFlights = 0;
 int onTimeFlights = 0;
 int delayedFlights = 0;
-PieChart pieChart; //<>//
-barChart flChart; //<>//
-Tab flightTab, tab2, tab3, tab4; //<>//
-//int colors[] = {#FF3E3E, #FFF646, #54FF46, #46E5FF}; //<>//
-String[] stateAcronymLines;  //<>//
-String[] stateAcronyms;  //<>//
+PieChart pieChart;
+barChart flChart;
+Tab flightTab, tab2, tab3, tab4;
+//int colors[] = {#FF3E3E, #FFF646, #54FF46, #46E5FF};
+String[] stateAcronymLines;
+String[] stateAcronyms;
 ScreenButton[] buttons = new ScreenButton[51];
-int screen = 1; 
+int screen = 1;
 barChart[] myBarCharts = new barChart[50];
-int colors[] = {#562C2C, #F2542D, #F5DFBB, #127475}; //<>//
+//int colors[] = {#562C2C, #F2542D, #F5DFBB, #127475};
+int colors[] = {#B456AE, #B66FD3, #D4B0F2, #D364BB};
 int timeArray[];
 PImage image;
 PImage plane;
-int stateNumber; //<>//
+int stateNumber;
 int startIndex = 0;
 int endIndex = 30;
- //<>//
+
 void setup() {
-  theTable = loadTable("flights2k.csv", "header"); //<>//
+  theTable = loadTable("flights2k.csv", "header");
   stateAcronymLines = loadStrings("State Acronyms.csv");
   stateAcronyms = split(stateAcronymLines[0], ',');
-  image = loadImage("usstatesbc__90159.jpg"); //<>//
-  initFlights(); //<>//
+  image = loadImage("usstatesbc__90159.jpg");
+  initFlights();
   size(1000, 1000);
   cp5 = new ControlP5(this);
-  noStroke(); //<>//
+  noStroke();
   rectMode(CENTER);
-  addTabs(); //<>//
+  addTabs();
   addButtons();
   appName = loadFont("Georgia-BoldItalic-120.vlw");
   ornaments = loadFont("BodoniOrnamentsITCTT-120.vlw");
-  standard =loadFont("ArialMT-20.vlw"); //<>//
+  bodyFont = loadFont("Charter-Black-40.vlw");
+  standard =loadFont("ArialMT-20.vlw");
   textFont(standard);
   flChart = new barChart(freqMap);
   timeArray = sortOutPunctuality();
   pieChart = new PieChart(width/2.0, height/2.0);
   textSize(20);
-
   initStateButtons();
   for (int i = 0; i < myBarCharts.length; i++) {
     freqMap = countCitiesInState(stateAcronyms[i]);
@@ -67,7 +68,7 @@ void setup() {
 
 void initStateButtons()
 {
-  
+
   buttons[0] = new ScreenButton( 250, 39, 84, 55, 0); //alabama
   buttons[1] = new ScreenButton(250, 110, 84, 55, 1); //goes down to virginia
   buttons[2] = new ScreenButton(250, 182, 84, 55, 2);
@@ -131,27 +132,27 @@ void draw()
 void addTabs()
 {
   flightTab = cp5.addTab("Flights from Florida")
-    .setColorBackground(color(0, 160, 100))
+    .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
-    .setColorActive(color(255, 128, 0))
+    .setColorActive(color(219, 164, 216))
     .setId(2);
 
   tab2 = cp5.addTab("Tab 2")
-    .setColorBackground(color(0, 160, 100))
+    .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
-    .setColorActive(color(255, 128, 0))
+    .setColorActive(color(219, 164, 216))
     .setId(3);
 
   tab3 = cp5.addTab("Tab 3")
-    .setColorBackground(color(0, 160, 100))
+    .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
-    .setColorActive(color(255, 128, 0))
+    .setColorActive(color(219, 164, 216))
     .setId(4);
 
   tab4 = cp5.addTab("Tab 4")
-    .setColorBackground(color(0, 160, 100))
+    .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
-    .setColorActive(color(255, 128, 0))
+    .setColorActive(color(219, 164, 216))
     .setId(5);
 
   cp5.getTab("default")
@@ -169,7 +170,7 @@ void addButtons()
     .setValue(1)
     .setBroadcast(true)
     .setLabel("Sort By State")
-    .setColorBackground(color(#F25F5C))
+    .setColorBackground(color(#B456AE))
     ;
 
   cp5.addButton("button2")
@@ -179,7 +180,7 @@ void addButtons()
     .setValue(1)
     .setBroadcast(true)
     .setLabel("Sort By Date")
-    .setColorBackground(color(#50514F))
+    .setColorBackground(color(#B66FD3))
     ;
 
   cp5.addButton("button3")
@@ -189,7 +190,7 @@ void addButtons()
     .setValue(1)
     .setBroadcast(true)
     .setLabel("Flight Status")
-    .setColorBackground(color(#247BA0))
+    .setColorBackground(color(#D4B0F2))
     ;
 
   cp5.addButton("button4")
@@ -199,7 +200,7 @@ void addButtons()
     .setValue(1)
     .setBroadcast(true)
     .setLabel("Last Tab")
-    .setColorBackground(color(#0C4767))
+    .setColorBackground(color(#D364BB))
     ;
 
   //cp5.addButton("home")
@@ -207,6 +208,8 @@ void addButtons()
   //  .moveTo(tab2)
   //  .setSize(80, 40)
   //  ;
+  
+  // in pie chart
   cp5.addButton("home_copy1")
     .setPosition((width/2) - 40, (height/2)+120)
     .moveTo(tab3)
@@ -219,12 +222,12 @@ void addButtons()
     .setSize(80, 40)
     .setLabel("home")
     ;
-  cp5.addButton("home_copy3")
-    .setPosition((width/2) - 40, (height/2)+50)
-    .moveTo(flightTab)
-    .setSize(80, 40)
-    .setLabel("home")
-    ;
+  //cp5.addButton("home_copy3")
+  //  .setPosition((width/2) - 40, (height/2)+50)
+  //  .moveTo(flightTab)
+  //  .setSize(80, 40)
+  //  .setLabel("home")
+  //  ;
 
 
 
@@ -302,7 +305,7 @@ void displayTabs() {
   }
 }
 void displayTab1() {
-  tint(0,50);
+  tint(0, 50);
   image(plane, width/2 - 400, height/2 - 350);
   textFont(appName);
   textSize(120);
@@ -335,9 +338,9 @@ void displayTab2() {
     image(image, x, y, imageWidth, imageHeight);
   } else if (screen == 2) {
     // Display second screen
-    background(#65C2DE);
-    stroke(#050505);
-    fill(#F784E2);
+    background(254, 193, 255);
+    stroke(255);
+    fill(255);
     myBarCharts[stateNumber].drawChart();
     buttons[50].display();
   }
@@ -357,11 +360,10 @@ void displayTab3() {
   {
     text("Your date range has " + (betweenDates.size()+1) + " flights in it. To search again, just enter a new date range.", 50, 250);
     String[] printOut = new String[betweenDates.size()];
-    // we need to fix this so it prints the text properly - add scrolling maybe?
-    for (int i = 0; i < betweenDates.size(); i++ ){
-      printOut[i] = i + " | Jan " + betweenDates.get(i).day + "st | " /*+ betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " */ +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + /*" " +betweenDates.get(i).originState +" " +
-        betweenDates.get(i).originWAC + */" to " +betweenDates.get(i).dest + " " + betweenDates.get(i).destCity + /*" " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime +*/ " dep: " +
-        betweenDates.get(i).depTime + " " /*+betweenDates.get(i).crsArrTime +*/ +" arr: " + betweenDates.get(i).arrTime +/* " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted +*/ " dist: " +betweenDates.get(i).distance + "\n";
+    for (int i = 0; i < betweenDates.size(); i++ ) {
+      printOut[i] = i + " | Jan " + betweenDates.get(i) .day + "st | " /*+ betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " */ +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + /*" " +betweenDates.get(i).originState +" " +
+       betweenDates.get(i).originWAC + */" to " +betweenDates.get(i).dest + " " + betweenDates.get(i).destCity + /*" " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime +*/ " dep: " +
+        betweenDates.get(i) .depTime + " " /*+betweenDates.get(i).crsArrTime +*/ +" arr: " + betweenDates.get(i).arrTime +/* " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted +*/ " dist: " +betweenDates.get(i).distance + "\n";
     }
     for (int i = 0; i < endIndex-startIndex; i++)
     {
@@ -372,14 +374,28 @@ void displayTab3() {
 
 void displayTab4() {
   pieChart.drawPieChart(width/2.0, height/2.0, 200.0, timeArray, colors);
-  fill(#562C2C);
-  text("Cancelled", 20, height/2.0);
-  fill(#F2542D);
-  text("Early", 20, (height/2.0)+20);
-  fill(#F5DFBB);
-  text("On time", 20, (height/2.0)+40);
-  fill(#127475);
-  text("Delayed", 20, (height/2.0)+60);
+  textFont(appName);
+  textSize(60);
+  fill(255);
+  text("FLIGHT ARRIVAL TIMES", 100, 220);
+  fill(253, 160, 255);
+  text("FLIGHT ARRIVAL TIMES", 97, 220);
+  fill(251, 144, 255);
+  text("FLIGHT ARRIVAL TIMES", 94, 220);
+  textFont(ornaments);
+  textSize(60);
+  text("B", 70, 220);
+  text("B", 915, 220);
+  textFont(bodyFont);
+  fill(#B456AE);
+  text("Cancelled", 40, height/2.0 - 100);
+  fill(#B66FD3);
+  text("Early", 40, (height/2.0)-60);
+  fill(#D4B0F2);
+  text("On time", 40, (height/2.0)-20);
+  fill(#D364BB);
+  text("Delayed", 40, (height/2.0)+20);
+  textFont(standard);
 }
 
 void displayTab5() {
@@ -488,4 +504,3 @@ void mousePressed() {
     }
   }
 }
-  

@@ -17,7 +17,7 @@ void keyPressed() {
     startIndex--;
     endIndex--;
   }
-  
+
   if (key == '\n') {
     saved = typing;
     typing = "";

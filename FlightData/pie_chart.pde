@@ -1,8 +1,8 @@
 class PieChart {
   int total = 0;
   float lastAngle, mouseAngle;
-  
-  
+
+
   PieChart ( float pX, float pY) {
     noStroke();
     lastAngle = -PI;
@@ -14,8 +14,8 @@ class PieChart {
     for (int i = 0; i <pVal.length; i++) {
       total += pVal[i];
     }
-      
-   for (int i = 0; i <pVal.length; i++) {
+
+    for (int i = 0; i <pVal.length; i++) {
       fill(pCols[i]);
       float angle = map(pVal[i], 0, total, 0, 2*PI);
       arc(pX, pY, pDia, pDia, lastAngle, lastAngle+angle, PIE);
