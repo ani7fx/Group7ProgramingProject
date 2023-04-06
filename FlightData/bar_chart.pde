@@ -40,7 +40,7 @@ class barChart {
     for (int i = 0; i < numBars; i++) {
       int barHeight = data[i]*5;
       int x = chartX + (i+1) * barWidth;
-      int y = chartY + chartHeight - barHeight/2;
+      int y = chartY + chartHeight - barHeight/2;  //<>//
       fill(0, 0, 255);
       rect(x, y, barWidth, barHeight);
 
@@ -56,5 +56,6 @@ class barChart {
         text(j, chartX - labelOffset, chartY + 350-(j*5));
       }
       textAlign(LEFT);
+      noStroke();
   }
 }
