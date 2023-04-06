@@ -313,6 +313,8 @@ void displayTab1() {
   textFont(ornaments);
   text("B", 160, 250);
   text("B", 790, 250);
+  textSize(20);
+  textFont(standard);
 }
 
 void displayTab2() {
