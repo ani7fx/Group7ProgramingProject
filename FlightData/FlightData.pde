@@ -1,10 +1,12 @@
-import controlP5.*;   //<>//
+import controlP5.*;   //<>// //<>//
 ControlP5 cp5;
 barChart chart1;
 int currentTab = 1;
 Table theTable;
 ArrayList <DataPoint> flightsArray = new ArrayList<DataPoint>();
 PFont standard;
+PFont appName;
+PFont ornaments;
 HashMap<String, Integer> freqMap = new HashMap<String, Integer>();
 ArrayList <String> floridaAirports = new ArrayList<String>();
 String input;
@@ -37,7 +39,9 @@ void setup() {
   rectMode(CENTER);
   addTabs();
   addButtons();
-  standard =loadFont("ArialMT-20.vlw");
+  standard = loadFont("ArialMT-20.vlw");
+  appName = loadFont("Georgia-BoldItalic-120.vlw");
+  ornaments = loadFont("BodoniOrnamentsITCTT-120.vlw");
   textFont(standard);
   countCitiesInState();
   flChart = new barChart(freqMap);
@@ -109,7 +113,7 @@ void initStateButtons()
 
 void draw()
 {
-  background(100, 160, 100);
+  background(254, 193, 255);
   displayTabs();
   
   
@@ -290,7 +294,18 @@ void displayTabs() {
 }
 void displayTab1() {
   tint(0,50);
-  image(plane,width/2 - 400,height/2 - 350);
+  image(plane, width/2 - 400, height/2 - 350);
+  textFont(appName);
+  textSize(120);
+  fill(255);
+  text("RALSAIR", 210, 250);
+  fill(253, 160, 255);
+  text("RALSAIR", 205, 250);
+  fill(251, 144, 255);
+  text("RALSAIR", 200, 250);
+  textFont(ornaments);
+  text("B", 160, 250);
+  text("B", 790, 250);
 }
 
 void displayTab2() {
