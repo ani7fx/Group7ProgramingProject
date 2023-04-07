@@ -37,12 +37,12 @@ int startIndex = 0;
 int endIndex = 30;
 
 void setup() {
-  theTable = loadTable("flights2k.csv", "header");
+  theTable = loadTable("flights_full.csv", "header");
   stateAcronymLines = loadStrings("State Acronyms.csv");
   stateAcronyms = split(stateAcronymLines[0], ',');
   image = loadImage("usstatesbc__90159.jpg");
   initFlights();
-  size(1000, 1000);
+  size(1500, 900);
   cp5 = new ControlP5(this);
   noStroke();
   rectMode(CENTER);
@@ -315,14 +315,14 @@ void displayTab1() {
   textFont(appName);
   textSize(120);
   fill(255);
-  text("RALSAIR", 210, 250);
+  text("RALSAIR", width/2 - 270, 250);
   fill(253, 160, 255);
-  text("RALSAIR", 205, 250);
+  text("RALSAIR", width/2 - 270 - 5, 250);
   fill(251, 144, 255);
-  text("RALSAIR", 200, 250);
+  text("RALSAIR", width/2 - 270 - 10, 250);
   textFont(ornaments);
-  text("B", 160, 250);
-  text("B", 790, 250);
+  text("B", width/2 - 340, 250);
+  text("B", width/2 + 330, 250);
   textSize(20);
   textFont(standard);
 }
@@ -336,8 +336,8 @@ void displayTab2() {
     // Display first screen
     float imageWidth = image.width * 0.6; // Reduce the width of the image to be 50% of its original size
     float imageHeight = image.height * 0.6; // Reduce the height of the image to be 50% of its original size
-    float x = (width-imageWidth)/2; // Calculate the x position to center the image
-    float y = height * 0.01 ; // Set the y position to be 10% from the top of the screen
+    float x = (1000-imageWidth)/2; // Calculate the x position to center the image
+    float y = 1000 * 0.01 ; // Set the y position to be 10% from the top of the screen
     background(255);
     noTint();
     image(image, x, y, imageWidth, imageHeight);
