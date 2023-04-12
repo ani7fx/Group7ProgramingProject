@@ -388,15 +388,21 @@ void displayTab2() {
 }
 
 void displayTab3() {
-  fill(#FA49F1);
+  textFont(appName);
+  textSize(60);
+  fill(255);
+  text("SORT BY DATE", 804, 100);
+  fill(253, 160, 255);
+  text("SORT BY DATE", 802, 100);
+  fill(251, 144, 255);
+  text("SORT BY DATE", 800, 100);
   textFont(ornaments);
   textSize(60);
   text("B", width/2 + 25, 100);
   text("B", width/2 + 545, 100);
-  textFont(appName);
-  textSize(60);
-  text("SORT BY DATE", 800, 100);
+  textSize(20);
   textFont(standard);
+  
   fill(0);
   text("Enter your start date and end date in the format mm/dd/yyyy - mm/dd/yyyy", 50, 100);
   fill(255);
@@ -447,15 +453,19 @@ void displayTab4() {
 }
 
 void displayTab5() {
-
   textFont(appName);
   textSize(60);
   fill(255);
-  text("FLIGHT DISTANCES", width/2 - 300, 190);
+  text("FLIGHT DISTANCES", width/2 - 294, 180);
+  fill(253, 160, 255);
+  text("FLIGHT DISTANCES", width/2 - 297 , 180);
+  fill(251, 144, 255);
+  text("FLIGHT DISTANCES", width/2 - 300, 180);
   textFont(ornaments);
   textSize(60);
-  text("B", width/2 - 330, 190);
-  text("B", width/2 + 360, 190);
+  text("B", width/2 - 325, 180);
+  text("B", width/2 + 360, 180);
+
   textFont(standard);
   histogram.drawChart();
 }
