@@ -36,6 +36,20 @@ int stateNumber;
 int startIndex = 0;
 int endIndex = 30;
 
+//histogram bins and names;
+String[] names = {"0-500", "500-1000", "1000-1500", "1500-2000", "2000-2500", "2500-3000", "3000-3500", "4000-4500", "4500-5000", "5000+"};
+int[] data = new int[names.length];
+int bin1 = 0;
+int bin2 = 0;
+int bin3 = 0;
+int bin4 = 0;
+int bin5 = 0;
+int bin6 = 0;
+int bin7 = 0;
+int bin8 = 0;
+int bin9 = 0;
+int bin10 = 0;
+
 void setup() {
   theTable = loadTable("flights_full.csv", "header");
   stateAcronymLines = loadStrings("State Acronyms.csv");
@@ -213,7 +227,7 @@ void addButtons()
   //  .moveTo(tab2)
   //  .setSize(80, 40)
   //  ;
-  
+
   // in pie chart
   cp5.addButton("home_copy1")
     .setPosition((width/2) - 40, (height/2)+120)
@@ -405,6 +419,7 @@ void displayTab4() {
 
 void displayTab5() {
   text("this is tab 4", 200, 200);
+  
 }
 
 void initFlights() {
@@ -442,6 +457,46 @@ HashMap countCitiesInState(String state) {
     System.out.println(key + ": " + frequency);
   }
   return freqMap;
+}
+
+void sortoutDistance () {
+
+  int currentDist;
+  for (int i = 0; i < flightsArray.size(); i++)
+  {
+    currentDist = Integer.parseInt(flightsArray.get(i).distance);
+    if (currentDist < 500) {
+      bin1++;
+    } else if (currentDist < 1000) {
+      bin2++;
+    } else if (currentDist < 1500) {
+      bin3++;
+    } else if (currentDist < 2000) {
+      bin4++;
+    } else if (currentDist < 2500) {
+      bin5++;
+    } else if (currentDist < 3000) {
+      bin6++;
+    } else if (currentDist < 3500) {
+      bin7++;
+    } else if (currentDist < 4000) {
+      bin8++;
+    } else if (currentDist < 4500) {
+      bin9++;
+    } else {
+      bin10++;
+    }
+  }
+  data[0] = bin1;
+  data[1] = bin2;
+  data[2] = bin3;
+  data[3] = bin4;
+  data[4] = bin5;
+  data[5] = bin6;
+  data[6] = bin7;
+  data[7] = bin8;
+  data[8] = bin9;
+  data[9] = bin10;
 }
 
 int[] sortOutPunctuality() {
