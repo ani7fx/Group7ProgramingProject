@@ -10,8 +10,8 @@ class barChart { //<>//
   int j = 0;
   HashMap<String, Integer> freqMap;
   int maxVal;
- double average;
- 
+  double average;
+
   barChart(HashMap freqMap)
   {
     this.freqMap = freqMap;
@@ -22,7 +22,7 @@ class barChart { //<>//
     ArrayList<Integer> valuesList = new ArrayList<Integer>(freqMap.values());
     average = valuesList.stream().mapToDouble(i -> i).average().orElse(Double.NaN);
     for (int value : valuesList) {
-    if (value > maxVal) {
+      if (value > maxVal) {
         maxVal = value;
       }
     }
@@ -51,32 +51,30 @@ class barChart { //<>//
       fill(255);
 
       // draw x-axis labels
-      //textSize(15);
       textAlign(CENTER);
       fill(0);
       text(names[i], x + barWidth/2 - 25, chartY + chartHeight + labelOffset);
-      
+
       // draw the values of each bar over the bar
       textSize(18);
       text(Integer.toString(data[i]), x + barWidth/2 - 25, chartY + chartHeight + labelOffset -barHeight-35);
-      
     }
-     text("All airports from the selected state" , (chartX + (numBars+1) * barWidth)/1.5, chartY + chartHeight + 70);
-     text("Number of airports : " + numBars,width/2,60);
-     text("Average flights per airport: " + Math.round(average),width/2, 80);
-     
-     pushMatrix();
-     float angle1 = radians(270);
-     translate(-380,500);
-     rotate(angle1);
-     text("Number of Flights",50, 450);
-     popMatrix();
+    text("All airports from the selected state", (chartX + (numBars+1) * barWidth)/1.5, chartY + chartHeight + 70);
+    text("Number of airports : " + numBars, width/2, 60);
+    text("Average flights per airport: " + Math.round(average), width/2, 80);
+
+    pushMatrix();
+    float angle1 = radians(270);
+    translate(-380, 500);
+    rotate(angle1);
+    text("Number of Flights", 50, 450);
+    popMatrix();
     // draw y-axis labels
     textAlign(RIGHT);
     for (int j = maxVal; j >= 0; j -= (int) Math.ceil(maxVal/10.0)) {
       int y = chartY + chartHeight - (int) (j * 1.0 / maxVal * chartHeight);
       text(j, chartX - labelOffset, y);
-      text("-", chartX+4.5,y);
+      text("-", chartX+4.5, y);
     }
     textAlign(LEFT);
     noStroke();

@@ -1,69 +1,49 @@
-import controlP5.*; //<>//
+import controlP5.*;
 ControlP5 cp5;
+barChart chart1;
 int currentTab = 1;
-
 Table theTable;
 ArrayList <DataPoint> flightsArray = new ArrayList<DataPoint>();
-// all fonts
 PFont standard;
 PFont appName;
 PFont ornaments;
 PFont bodyFont;
-
-PImage statesImage;
-PImage plane;
-
 String input;
 HashMap<String, Integer> freqMap = new HashMap<String, Integer>();
+ArrayList <String> floridaAirports = new ArrayList<String>();
 ArrayList<DataPoint> betweenDates;
-int y1 = 300; //starting y value for date data
-int y2 = 20; // y multiple for date data
-int startIndex = 0;
-int endIndex = 30;
-
-// initialisations for sort out punctuality
+int y1 = 300;
+int y2 = 20;
 int cancelledFlights = 0;
 int earlyFlights = 0;
 int onTimeFlights = 0;
 int delayedFlights = 0;
 PieChart pieChart;
-
-
+barChart flChart;
 Tab flightTab, tab2, tab3, tab4;
+//int colors[] = {#FF3E3E, #FFF646, #54FF46, #46E5FF};
 String[] stateAcronymLines;
 String[] stateAcronyms;
-ScreenButton[] buttons = new ScreenButton[51]; // for sort by state
+ScreenButton[] buttons = new ScreenButton[51];
 int screen = 1;
-int stateNumber;
-
-barChart barChart;
 barChart[] myBarCharts = new barChart[50];
+//int colors[] = {#562C2C, #F2542D, #F5DFBB, #127475};
 int colors[] = {#B456AE, #B66FD3, #D4B0F2, #D364BB};
 int timeArray[];
-
-//histogram bins and names;
-Histogram histogram;
-String[] names = {"0-500", "500-1000", "1000-1500", "1500-2000", "2000-2500", "2500-3000", "3000-3500", "4000-4500", "4500-5000", "5000+"};
-int[] data = new int[names.length];
-int bin1 = 0;
-int bin2 = 0;
-int bin3 = 0;
-int bin4 = 0;
-int bin5 = 0;
-int bin6 = 0;
-int bin7 = 0;
-int bin8 = 0;
-int bin9 = 0;
-int bin10 = 0;
+PImage image;
+PImage plane;
+int stateNumber;
+int startIndex = 0;
+int endIndex = 30;
 
 void setup() {
-  size(1500, 900);
-  cp5 = new ControlP5(this);
   theTable = loadTable("flights_full.csv", "header");
   stateAcronymLines = loadStrings("State Acronyms.csv");
   stateAcronyms = split(stateAcronymLines[0], ',');
-  statesImage = loadImage("usstatesbc__90159.jpg");
+  image = loadImage("usstatesbc__90159.jpg");
   initFlights();
+  size(1500, 900);
+  cp5 = new ControlP5(this);
   noStroke();
   rectMode(CENTER);
   addTabs();
@@ -73,11 +53,9 @@ void setup() {
   bodyFont = loadFont("Charter-Black-40.vlw");
   standard =loadFont("ArialMT-20.vlw");
   textFont(standard);
-  barChart = new barChart(freqMap);
+  flChart = new barChart(freqMap);
   timeArray = sortOutPunctuality();
   pieChart = new PieChart(width/2.0, height/2.0);
-  sortoutDistance();
-  histogram = new Histogram(data, names);
   textSize(20);
   initStateButtons();
   for (int i = 0; i < myBarCharts.length; i++) {
@@ -151,63 +129,45 @@ void draw()
   displayTabs();
 }
 
-// initialise datePoints in flightsArray
-void initFlights() {
-  int rowCount = theTable.getRowCount();
-  for (int i = 0; i < rowCount; i++)
-  {
-    TableRow row = theTable.getRow(i);
-    flightsArray.add(new DataPoint(row));
-  }
-}
-
 void addTabs()
 {
-  // creating the tabs
   flightTab = cp5.addTab("Flights from Florida")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
     .setId(2)
-    .setHeight(40)
-    .setLabel("Sort by state");
+    .setHeight(40);
 
   tab2 = cp5.addTab("Tab 2")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
     .setId(3)
-    .setHeight(40)
-    .setLabel("Sort By Date");
+    .setHeight(40);
 
   tab3 = cp5.addTab("Tab 3")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
     .setId(4)
-    .setHeight(40)
-    .setLabel("Flight Status");
+    .setHeight(40);
 
   tab4 = cp5.addTab("Tab 4")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
     .setId(5)
-    .setHeight(40)
-    .setLabel("Distance");
+    .setHeight(40);
 
   cp5.getTab("default")
     .activateEvent(true)
     .setLabel("home")
     .setId(1)
-    .setHeight(40)
-    .setColorActive(color(259, 164, 216))
-    .setColorBackground(color(#B456AF));
+    .setHeight(40);
 }
 
 void addButtons()
 {
-  // create the buttons
   cp5.addButton("Flights")
     .setBroadcast(false)
     .setPosition(width/2-120, height/2-50)
@@ -215,7 +175,8 @@ void addButtons()
     .setValue(1)
     .setBroadcast(true)
     .setLabel("Sort By State")
-    .setColorBackground(color(#B456AE));
+    .setColorBackground(color(#B456AE))
+    ;
 
   cp5.addButton("button2")
     .setBroadcast(false)
@@ -224,7 +185,8 @@ void addButtons()
     .setValue(1)
     .setBroadcast(true)
     .setLabel("Sort By Date")
-    .setColorBackground(color(#B66FD3));
+    .setColorBackground(color(#B66FD3))
+    ;
 
   cp5.addButton("button3")
     .setBroadcast(false)
@@ -233,7 +195,8 @@ void addButtons()
     .setValue(1)
     .setBroadcast(true)
     .setLabel("Flight Status")
-    .setColorBackground(color(#D4B0F2));
+    .setColorBackground(color(#D4B0F2))
+    ;
 
   cp5.addButton("button4")
     .setBroadcast(false)
@@ -241,62 +204,91 @@ void addButtons()
     .setSize(80, 40)
     .setValue(1)
     .setBroadcast(true)
-    .setLabel("Distance")
-    .setColorBackground(color(#D364BB));
+    .setLabel("Last Tab")
+    .setColorBackground(color(#D364BB))
+    ;
 
+  //cp5.addButton("home")
+  //  .setPosition((width/2) - 40, (height/2)+50)
+  //  .moveTo(tab2)
+  //  .setSize(80, 40)
+  //  ;
+  
+  // in pie chart
   cp5.addButton("home_copy1")
     .setPosition((width/2) - 40, (height/2)+120)
     .moveTo(tab3)
     .setSize(80, 40)
-    .setLabel("home");
+    .setLabel("home")
+    ;
+  cp5.addButton("home_copy2")
+    .setPosition((width/2) - 40, (height/2)+50)
+    .moveTo(tab4)
+    .setSize(80, 40)
+    .setLabel("home")
+    ;
+  //cp5.addButton("home_copy3")
+  //  .setPosition((width/2) - 40, (height/2)+50)
+  //  .moveTo(flightTab)
+  //  .setSize(80, 40)
+  //  .setLabel("home")
+  //  ;
+
+
+
+  //cp5.getTab("Flights from Florida").add(cp5.getController("Home"));
 }
 
+//public void controlEvent(ControlEvent theEvent) {
+//  println(theEvent.getController().getName());
+//}
 void controlEvent(ControlEvent event) {
   // update current tab only if the current event comes from a tab (and not other controllers)
   if (event.isTab()) {
     currentTab = event.getId();
   }
 }
-public void Flights() {
+public void Flights(int theValue) {
   cp5.getTab("Flights from Florida").bringToFront();
   currentTab = 2;
 }
 
-public void button2() {
+public void button2(int theValue) {
   cp5.getTab("Tab 2").bringToFront();
   currentTab = 3;
 }
 
-public void button3() {
+public void button3(int theValue) {
   cp5.getTab("Tab 3").bringToFront();
   currentTab = 4;
 }
 
-public void button4() {
+public void button4(int theValue) {
   cp5.getTab("Tab 4").bringToFront();
   currentTab = 5;
 }
 
-public void Home() {
+public void Home(int theValue) {
   cp5.getTab("default").bringToFront();
   currentTab = 1;
 }
-public void home_copy1() {
+public void home_copy1(int theValue) {
   cp5.getTab("default").bringToFront();
   currentTab = 1;
 }
-public void home_copy2() {
+public void home_copy2(int theValue) {
   cp5.getTab("default").bringToFront();
   currentTab = 1;
 }
-public void home_copy3() {
+public void home_copy3(int theValue) {
   cp5.getTab("default").bringToFront();
   currentTab = 1;
 }
-public void home() {
+public void home(int theValue) {
   cp5.getTab("default").bringToFront();
   currentTab = 1;
 }
+
 
 void displayTabs() {
   switch(currentTab) {
@@ -317,8 +309,6 @@ void displayTabs() {
     break;
   }
 }
-
-// show content of tabs
 void displayTab1() {
   tint(0, 50);
   image(plane, width/2 - 400, height/2 - 350);
@@ -335,7 +325,6 @@ void displayTab1() {
   text("B", width/2 + 330, 250);
   textSize(20);
   textFont(standard);
-  noTint();
 }
 
 void displayTab2() {
@@ -345,18 +334,13 @@ void displayTab2() {
       buttons[i].display();
     }
     // Display first screen
-    float imageWidth = statesImage.width * 0.6; // Reduce the width of the image to be 50% of its original size
-    float imageHeight = statesImage.height * 0.6; // Reduce the height of the image to be 50% of its original size
+    float imageWidth = image.width * 0.6; // Reduce the width of the image to be 50% of its original size
+    float imageHeight = image.height * 0.6; // Reduce the height of the image to be 50% of its original size
     float x = (1000-imageWidth)/2; // Calculate the x position to center the image
     float y = 1000 * 0.01 ; // Set the y position to be 10% from the top of the screen
     background(255);
     noTint();
-    image(statesImage, x, y, imageWidth, imageHeight);
-    textFont(appName);
-    textSize(60);
-    text("Select a state", 870, 370);
-    text("to view flights", 850, 450);
-    textFont(standard);
+    image(image, x, y, imageWidth, imageHeight);
   } else if (screen == 2) {
     // Display second screen
     background(254, 193, 255);
@@ -365,19 +349,12 @@ void displayTab2() {
     myBarCharts[stateNumber].drawChart();
     buttons[50].display();
   }
+  //flChart.drawChart();
+  // cp5.addDropdownList;
+  //flChart.drawChart();
 }
 
 void displayTab3() {
-  fill(#FA49F1);
-  textFont(ornaments);
-  textSize(60);
-  text("B", width/2 + 25, 100);
-  text("B", width/2 + 545, 100);
-  textFont(appName);
-  textSize(60);
-  text("SORT BY DATE", 800, 100);
-  textFont(standard);
-  fill(0);
   text("Enter your start date and end date in the format mm/dd/yyyy - mm/dd/yyyy", 50, 100);
   fill(255);
   rect(175, 140, 250, 30);
@@ -388,11 +365,12 @@ void displayTab3() {
   {
     text("Your date range has " + (betweenDates.size()+1) + " flights in it. To search again, just enter a new date range.", 50, 250);
     String[] printOut = new String[betweenDates.size()];
-    for (int i = 0; i < betweenDates.size(); i++ ) { //Create an array with all printable data
-      printOut[i] = i + " | Jan " + betweenDates.get(i) .day + " | " + betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + " to " +betweenDates.get(i).dest + " " +
-        betweenDates.get(i).destCity + ". Departed: " + betweenDates.get(i).depTime +". Arrived: " + betweenDates.get(i).arrTime + ". Distance: " +betweenDates.get(i).distance;
+    for (int i = 0; i < betweenDates.size(); i++ ) {
+      printOut[i] = i + " | Jan " + betweenDates.get(i) .day + "st | " /*+ betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " */ +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + /*" " +betweenDates.get(i).originState +" " +
+       betweenDates.get(i).originWAC + */" to " +betweenDates.get(i).dest + " " + betweenDates.get(i).destCity + /*" " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime +*/ " dep: " +
+        betweenDates.get(i) .depTime + " " /*+betweenDates.get(i).crsArrTime +*/ +" arr: " + betweenDates.get(i).arrTime +/* " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted +*/ " dist: " +betweenDates.get(i).distance + "\n";
     }
-    for (int i = 0; i < endIndex-startIndex; i++) // Print date within date range
+    for (int i = 0; i < endIndex-startIndex; i++)
     {
       text(printOut[startIndex + i], 20, y1 + (y2*i));
     }
@@ -404,15 +382,15 @@ void displayTab4() {
   textFont(appName);
   textSize(60);
   fill(255);
-  text("FLIGHT ARRIVAL TIMES", width/2 - 400, 220);
+  text("FLIGHT ARRIVAL TIMES", 100, 220);
   fill(253, 160, 255);
-  text("FLIGHT ARRIVAL TIMES", width/2 - 400 - 3, 220);
+  text("FLIGHT ARRIVAL TIMES", 97, 220);
   fill(251, 144, 255);
-  text("FLIGHT ARRIVAL TIMES", width/2 - 400 - 7, 220);
+  text("FLIGHT ARRIVAL TIMES", 94, 220);
   textFont(ornaments);
   textSize(60);
-  text("B", width/2 - 440, 220);
-  text("B", width/2 + 420, 220);
+  text("B", 70, 220);
+  text("B", 915, 220);
   textFont(bodyFont);
   fill(#B456AE);
   text("Cancelled", 40, height/2.0 - 100);
@@ -426,17 +404,16 @@ void displayTab4() {
 }
 
 void displayTab5() {
+  text("this is tab 4", 200, 200);
+}
 
-  textFont(appName);
-  textSize(60);
-  fill(255);
-  text("FLIGHT DISTANCES", width/2 - 300, 190);
-  textFont(ornaments);
-  textSize(60);
-  text("B", width/2 - 330, 190);
-  text("B", width/2 + 360, 190);
-  textFont(standard);
-  histogram.drawChart();
+void initFlights() {
+  int rowCount = theTable.getRowCount();
+  for (int i = 0; i < rowCount; i++)
+  {
+    TableRow row = theTable.getRow(i);
+    flightsArray.add(new DataPoint(row));
+  }
 }
 
 HashMap countCitiesInState(String state) {
@@ -458,51 +435,13 @@ HashMap countCitiesInState(String state) {
       freqMap.put(city, 1);
     }
   }
+
   for (String key : freqMap.keySet())
   {
     int frequency = freqMap.get(key);
     System.out.println(key + ": " + frequency);
   }
   return freqMap;
-}
-
-void sortoutDistance () {
-  float currentDist;
-  for (int i = 0; i < flightsArray.size(); i++)
-  {
-    currentDist = Float.parseFloat(flightsArray.get(i).distance);
-    if (currentDist < 500) {
-      bin1++;
-    } else if (currentDist < 1000) {
-      bin2++;
-    } else if (currentDist < 1500) {
-      bin3++;
-    } else if (currentDist < 2000) {
-      bin4++;
-    } else if (currentDist < 2500) {
-      bin5++;
-    } else if (currentDist < 3000) {
-      bin6++;
-    } else if (currentDist < 3500) {
-      bin7++;
-    } else if (currentDist < 4000) {
-      bin8++;
-    } else if (currentDist < 4500) {
-      bin9++;
-    } else {
-      bin10++;
-    }
-  }
-  data[0] = bin1;
-  data[1] = bin2;
-  data[2] = bin3;
-  data[3] = bin4;
-  data[4] = bin5;
-  data[5] = bin6;
-  data[6] = bin7;
-  data[7] = bin8;
-  data[8] = bin9;
-  data[9] = bin10;
 }
 
 int[] sortOutPunctuality() {
@@ -532,6 +471,28 @@ int[] sortOutPunctuality() {
   int[] timeArray = {cancelledFlights, earlyFlights, onTimeFlights, delayedFlights};
   return timeArray;
 }
+
+//if (screen == 1) {
+//  for (int i = 0; i < 50; i++) {
+//    noStroke();
+//    buttons[i].display();
+//  }
+//  // Display first screen
+//  float imageWidth = image.width * 0.6; // Reduce the width of the image to be 50% of its original size
+//  float imageHeight = image.height * 0.6; // Reduce the height of the image to be 50% of its original size
+//  float x = (width-imageWidth)/2; // Calculate the x position to center the image
+//  float y = height * 0.01 ; // Set the y position to be 10% from the top of the screen
+//  background(255);
+//  image(image, x, y, imageWidth, imageHeight);
+
+//} else if (screen == 2) {
+//  // Display second screen
+//  background(#65C2DE);
+//  stroke(#050505);
+//  fill(#F784E2);
+//  buttons[50].display();
+//}
+
 
 void mousePressed() {
   for (int i = 0; i < buttons.length; i++) {

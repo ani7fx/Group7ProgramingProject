@@ -12,7 +12,6 @@ class ScreenButton {
 
   void display() {
     rect(x, y, width, height);
-    //textAlign(CENTER, CENTER);
   }
 
   boolean isMouseOver() {

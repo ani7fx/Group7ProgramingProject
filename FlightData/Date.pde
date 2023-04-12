@@ -1,4 +1,4 @@
-String date; //<>// //<>// //<>//
+String date; //<>//
 int month, day, year, startDay, endDay;
 
 int dateSort(String date)
@@ -9,10 +9,7 @@ int dateSort(String date)
   month = Integer.parseInt(dateParts[0]);
   day = Integer.parseInt(dateParts[1]);
   year = Integer.parseInt(dateParts[2]);
-  //print("Month:", month);
-  //print("Day:", day);
-  //println("Year:", year);
-  return day;
+  return day;  // if we had data with different months or years we could add that to data point here also
 }
 
 ArrayList<DataPoint> betweenDates(String dates, ArrayList<DataPoint> flightsArray) {
