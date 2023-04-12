@@ -1,4 +1,4 @@
-import controlP5.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import controlP5.*; //<>//
 ControlP5 cp5;
 barChart chart1;
 int currentTab = 1;
@@ -20,6 +20,7 @@ int onTimeFlights = 0;
 int delayedFlights = 0;
 PieChart pieChart;
 barChart flChart;
+Histogram histogram;
 Tab flightTab, tab2, tab3, tab4;
 //int colors[] = {#FF3E3E, #FFF646, #54FF46, #46E5FF};
 String[] stateAcronymLines;
@@ -32,9 +33,13 @@ int colors[] = {#B456AE, #B66FD3, #D4B0F2, #D364BB};
 int timeArray[];
 PImage image;
 PImage plane;
+PImage planeIcon;
+PImage planeGIF;
 int stateNumber;
 int startIndex = 0;
 int endIndex = 30;
+float scaleX = -1.0; // flip horizontally
+float scaleY = 1.0;
 
 //histogram bins and names;
 String[] names = {"0-500", "500-1000", "1000-1500", "1500-2000", "2000-2500", "2500-3000", "3000-3500", "4000-4500", "4500-5000", "5000+"};
@@ -70,6 +75,8 @@ void setup() {
   flChart = new barChart(freqMap);
   timeArray = sortOutPunctuality();
   pieChart = new PieChart(width/2.0, height/2.0);
+  sortoutDistance();
+  histogram = new Histogram(data, names);
   textSize(20);
   initStateButtons();
   for (int i = 0; i < myBarCharts.length; i++) {
@@ -78,6 +85,9 @@ void setup() {
   }
   plane = loadImage("finalplane.png");
   plane.resize(800, 0);
+  //planeIcon = loadImage("planeIcon.png");
+  //planeIcon.resize(40,0);
+  //planeGIF = loadImage("planefloat.gif");
 }
 
 void initStateButtons()
@@ -145,43 +155,51 @@ void draw()
 
 void addTabs()
 {
+  // creating the tabs
   flightTab = cp5.addTab("Flights from Florida")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
     .setId(2)
-    .setHeight(40);
+    .setHeight(40)
+    .setLabel("Sort by state");
 
   tab2 = cp5.addTab("Tab 2")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
     .setId(3)
-    .setHeight(40);
+    .setHeight(40)
+    .setLabel("Sort By Date");
 
   tab3 = cp5.addTab("Tab 3")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
     .setId(4)
-    .setHeight(40);
+    .setHeight(40)
+    .setLabel("Flight Status");
 
   tab4 = cp5.addTab("Tab 4")
     .setColorBackground(color(211, 79, 205))
     .setColorLabel(color(255))
     .setColorActive(color(219, 164, 216))
     .setId(5)
-    .setHeight(40);
+    .setHeight(40)
+    .setLabel("Distance");
 
   cp5.getTab("default")
     .activateEvent(true)
     .setLabel("home")
     .setId(1)
-    .setHeight(40);
+    .setHeight(40)
+    .setColorActive(color(259, 164, 216))
+    .setColorBackground(color(#B456AF));
 }
 
 void addButtons()
 {
+  // create the buttons
   cp5.addButton("Flights")
     .setBroadcast(false)
     .setPosition(width/2-120, height/2-50)
@@ -190,6 +208,8 @@ void addButtons()
     .setBroadcast(true)
     .setLabel("Sort By State")
     .setColorBackground(color(#B456AE))
+    // .setColorLabel(color(0, 0, 0))
+    // .setFont(createFont("Arial", 8))
     ;
 
   cp5.addButton("button2")
@@ -218,7 +238,7 @@ void addButtons()
     .setSize(80, 40)
     .setValue(1)
     .setBroadcast(true)
-    .setLabel("Last Tab")
+    .setLabel("Distance")
     .setColorBackground(color(#D364BB))
     ;
 
@@ -229,33 +249,23 @@ void addButtons()
   //  ;
 
   // in pie chart
+
   cp5.addButton("home_copy1")
     .setPosition((width/2) - 40, (height/2)+120)
     .moveTo(tab3)
     .setSize(80, 40)
     .setLabel("home")
     ;
-  cp5.addButton("home_copy2")
-    .setPosition((width/2) - 40, (height/2)+50)
-    .moveTo(tab4)
-    .setSize(80, 40)
-    .setLabel("home")
-    ;
-  //cp5.addButton("home_copy3")
+  //cp5.addButton("home_copy2")
   //  .setPosition((width/2) - 40, (height/2)+50)
-  //  .moveTo(flightTab)
+  //  .moveTo(tab4)
   //  .setSize(80, 40)
   //  .setLabel("home")
   //  ;
 
-
-
   //cp5.getTab("Flights from Florida").add(cp5.getController("Home"));
 }
 
-//public void controlEvent(ControlEvent theEvent) {
-//  println(theEvent.getController().getName());
-//}
 void controlEvent(ControlEvent event) {
   // update current tab only if the current event comes from a tab (and not other controllers)
   if (event.isTab()) {
@@ -323,6 +333,8 @@ void displayTabs() {
     break;
   }
 }
+
+// show content of tab1
 void displayTab1() {
   tint(0, 50);
   image(plane, width/2 - 400, height/2 - 350);
@@ -339,6 +351,8 @@ void displayTab1() {
   text("B", width/2 + 330, 250);
   textSize(20);
   textFont(standard);
+  noTint();
+  //image(planeGIF, 300,400);
 }
 
 void displayTab2() {
@@ -355,6 +369,11 @@ void displayTab2() {
     background(255);
     noTint();
     image(image, x, y, imageWidth, imageHeight);
+    textFont(appName);
+    textSize(60);
+    text("Select a state", 870, 370);
+    text("to view flights", 850, 450);
+    textFont(standard);
   } else if (screen == 2) {
     // Display second screen
     background(254, 193, 255);
@@ -369,6 +388,16 @@ void displayTab2() {
 }
 
 void displayTab3() {
+  fill(#FA49F1);
+  textFont(ornaments);
+  textSize(60);
+  text("B", width/2 + 25, 100);
+  text("B", width/2 + 545, 100);
+  textFont(appName);
+  textSize(60);
+  text("SORT BY DATE", 800, 100);
+  textFont(standard);
+  fill(0);
   text("Enter your start date and end date in the format mm/dd/yyyy - mm/dd/yyyy", 50, 100);
   fill(255);
   rect(175, 140, 250, 30);
@@ -380,9 +409,9 @@ void displayTab3() {
     text("Your date range has " + (betweenDates.size()+1) + " flights in it. To search again, just enter a new date range.", 50, 250);
     String[] printOut = new String[betweenDates.size()];
     for (int i = 0; i < betweenDates.size(); i++ ) {
-      printOut[i] = i + " | Jan " + betweenDates.get(i) .day + "st | " /*+ betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " */ +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + /*" " +betweenDates.get(i).originState +" " +
+      printOut[i] = i + " | Jan " + betweenDates.get(i) .day + " | " /*+ betweenDates.get(i).mktCarrier + " " + betweenDates.get(i).flightNum + " " */ +betweenDates.get(i).origin + " " +betweenDates.get(i).originCity + /*" " +betweenDates.get(i).originState +" " +
        betweenDates.get(i).originWAC + */" to " +betweenDates.get(i).dest + " " + betweenDates.get(i).destCity + /*" " +betweenDates.get(i).destState + " " +betweenDates.get(i).destWAC + " " +betweenDates.get(i).crsDepTime +*/ " dep: " +
-        betweenDates.get(i) .depTime + " " /*+betweenDates.get(i).crsArrTime +*/ +" arr: " + betweenDates.get(i).arrTime +/* " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted +*/ " dist: " +betweenDates.get(i).distance + "\n";
+        betweenDates.get(i) .depTime + " " /*+betweenDates.get(i).crsArrTime +*/ +" arr: " + betweenDates.get(i).arrTime +/* " " +betweenDates.get(i).cancelled + " " +betweenDates.get(i).diverted +*/ " distance : " +betweenDates.get(i).distance + "\n";
     }
     for (int i = 0; i < endIndex-startIndex; i++)
     {
@@ -396,15 +425,15 @@ void displayTab4() {
   textFont(appName);
   textSize(60);
   fill(255);
-  text("FLIGHT ARRIVAL TIMES", 100, 220);
+  text("FLIGHT ARRIVAL TIMES", width/2 - 400, 220);
   fill(253, 160, 255);
-  text("FLIGHT ARRIVAL TIMES", 97, 220);
+  text("FLIGHT ARRIVAL TIMES", width/2 - 400 - 3, 220);
   fill(251, 144, 255);
-  text("FLIGHT ARRIVAL TIMES", 94, 220);
+  text("FLIGHT ARRIVAL TIMES", width/2 - 400 - 7, 220);
   textFont(ornaments);
   textSize(60);
-  text("B", 70, 220);
-  text("B", 915, 220);
+  text("B", width/2 - 440, 220);
+  text("B", width/2 + 420, 220);
   textFont(bodyFont);
   fill(#B456AE);
   text("Cancelled", 40, height/2.0 - 100);
@@ -418,8 +447,17 @@ void displayTab4() {
 }
 
 void displayTab5() {
-  text("this is tab 4", 200, 200);
-  
+
+  textFont(appName);
+  textSize(60);
+  fill(255);
+  text("FLIGHT DISTANCES", width/2 - 300, 190);
+  textFont(ornaments);
+  textSize(60);
+  text("B", width/2 - 330, 190);
+  text("B", width/2 + 360, 190);
+  textFont(standard);
+  histogram.drawChart();
 }
 
 void initFlights() {
@@ -461,10 +499,10 @@ HashMap countCitiesInState(String state) {
 
 void sortoutDistance () {
 
-  int currentDist;
+  float currentDist;
   for (int i = 0; i < flightsArray.size(); i++)
   {
-    currentDist = Integer.parseInt(flightsArray.get(i).distance);
+    currentDist = Float.parseFloat(flightsArray.get(i).distance);
     if (currentDist < 500) {
       bin1++;
     } else if (currentDist < 1000) {

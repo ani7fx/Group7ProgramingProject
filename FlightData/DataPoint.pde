@@ -6,7 +6,6 @@ class DataPoint { //<>//
 
   DataPoint(TableRow row)
   {
-
     flightDate = row.getString("FL_DATE");
     mktCarrier = row.getString("MKT_CARRIER");
     flightNum = row.getString("MKT_CARRIER_FL_NUM");
@@ -26,6 +25,5 @@ class DataPoint { //<>//
     diverted = row.getString("DIVERTED");
     distance = row.getString("DISTANCE");
     day = dateSort(flightDate);
-    
   }
 }
